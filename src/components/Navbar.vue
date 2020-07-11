@@ -82,6 +82,7 @@ export default {
 
 <style scoped>
 .navbar {
+    padding: 10px 20px;
   background-color: #70b2ee;
 }
 .navbar button {
@@ -95,6 +96,7 @@ export default {
   right: 12px;
 }
 .search-box {
+    height: 2rem;
   border: none;
   border-radius: 4px;
 }
@@ -108,13 +110,13 @@ export default {
     box-shadow: 0 1px 10px 0 grey;
 }
 .subnav button {
+    padding: 2px 8px;
+    text-align: center;
     font-size: 15px;
     font-weight: 500;
-    padding: 2px;
     margin-right: 20px;
-    text-align: center;
-    background-color: #ffffff;
     border-radius: 20px;
+    background-color: #ffffff;
     box-shadow: 1px 1px 5px rgb(204, 204, 204);
 }
 .information {
