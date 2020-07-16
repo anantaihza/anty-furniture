@@ -1,22 +1,32 @@
+/* eslint-disable */
+
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 
 //Bootstrap 4
-import "bootstrap"; 
+import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //font awesome
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBars, faSearch, faShoppingCart, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faSearch,
+  faShoppingCart,
+  faUserCircle,
+  faArrowLeft
+} from "@fortawesome/free-solid-svg-icons";
+
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faBars)
-library.add(faSearch)
-library.add(faShoppingCart)
-library.add(faUserCircle)
+library.add(faBars);
+library.add(faSearch);
+library.add(faShoppingCart);
+library.add(faUserCircle);
+library.add(faArrowLeft);
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 
 Vue.config.productionTip = false;
