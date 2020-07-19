@@ -1,6 +1,7 @@
 <template>
   <div>
     <navbar :navBack="false" />
+    <subnav />
     <div class="container" id="promo">
       <div class="row">
         <div class="col-md-5">
@@ -74,12 +75,14 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import Subnav from "@/components/Subnav.vue";
 import Footers from "@/components/Footers.vue";
 
 export default {
   name: "landing",
   components: {
     Navbar,
+    Subnav,
     Footers
   }
 };

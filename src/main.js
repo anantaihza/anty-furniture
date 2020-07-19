@@ -15,7 +15,8 @@ import {
   faSearch,
   faShoppingCart,
   faUserCircle,
-  faArrowLeft
+  faArrowLeft,
+  faGift
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -25,6 +26,7 @@ library.add(faSearch);
 library.add(faShoppingCart);
 library.add(faUserCircle);
 library.add(faArrowLeft);
+library.add(faGift);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

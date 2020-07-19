@@ -1,6 +1,7 @@
 <template>
   <div>
     <navbar />
+    <subnav />
     <section id="banner">
       <div class="container">
         <div class="row">
@@ -77,12 +78,14 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import Subnav from "@/components/Subnav.vue";
 import Quantity from "@/components/Quantity.vue";
 
 export default {
   name: "cart",
   components: {
     Navbar,
+    Subnav,
     Quantity
   }
 };
