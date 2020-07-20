@@ -5,24 +5,14 @@
       <div class="form-group row">
         <label for="form-name" class="col-sm-3 col-form-label">Name*</label>
         <div class="col-sm-9">
-          <input
-            type="text"
-            class="form-control border-0"
-            id="form-name"
-            placeholder="Insert your full name"
-          />
+          <input type="text" class="form-control border-0" id="form-name" value="Example Name" />
         </div>
       </div>
 
       <div class="form-group row">
         <label for="form-email" class="col-sm-3 col-form-label">Email*</label>
         <div class="col-sm-9">
-          <input
-            type="text"
-            class="form-control border-0"
-            id="form-email"
-            placeholder="Insert your email address"
-          />
+          <input type="text" class="form-control border-0" id="form-email" value="Example Email" />
         </div>
       </div>
 
@@ -33,7 +23,7 @@
             type="text"
             class="form-control border-0"
             id="form-address"
-            placeholder="Insert your address"
+            value="Example Address"
           />
         </div>
       </div>
@@ -45,7 +35,7 @@
             type="number"
             class="form-control border-0"
             id="form-phoneNumber"
-            placeholder="Insert your phone number"
+            value="08222222222"
           />
         </div>
       </div>
@@ -85,7 +75,7 @@
         </div>
       </div>
 
-      <router-link type="button" class="btn next-btn ml-auto" to="/reviewPesanan">Next</router-link>
+      <button type="button" class="btn next-btn ml-auto">Next</button>
     </form>
   </div>
 </template>
@@ -95,7 +85,7 @@
 // import Footers from "@/components/Footers.vue";
 
 export default {
-  name: "info-customer"
+  name: "review-customer"
 };
 </script>
 
