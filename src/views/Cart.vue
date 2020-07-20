@@ -8,7 +8,7 @@
           <div class="col-md-12 text-center">
             <h1>Your Basket</h1>
             <p>2 Items | Rp. 515.000</p>
-            <button type="button" class="btn">Payment</button>
+            <router-link type="button" class="btn payment" to="/infoPesanan">Payment</router-link>
           </div>
         </div>
       </div>
@@ -96,12 +96,12 @@ export default {
   margin-top: 50px;
   text-align: center;
 }
-#banner button {
+#banner .payment {
   background: #fd961e;
   border-radius: 0;
   margin-bottom: 2rem;
 }
-#banner button:hover {
+#banner .payment:hover {
   background: #f78b0f;
 }
 #banner input {
