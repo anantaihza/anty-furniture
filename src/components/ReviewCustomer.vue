@@ -75,7 +75,7 @@
         </div>
       </div>
 
-      <button type="button" class="btn next-btn ml-auto">Next</button>
+      <router-link type="button" class="btn next-btn ml-auto" to="/paymentPesanan">Next</router-link>
     </form>
   </div>
 </template>
