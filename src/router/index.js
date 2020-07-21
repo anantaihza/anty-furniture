@@ -8,6 +8,7 @@ import Register from "../views/Register.vue";
 import InfoPesanan from "../views/InfoPesanan.vue";
 import ReviewPesanan from "../views/ReviewPesanan.vue";
 import PaymentPesanan from "../views/PaymentPesanan.vue";
+import Product from "../views/Product.vue";
 
 Vue.use(VueRouter);
 
@@ -51,6 +52,11 @@ const routes = [
     path:"/paymentPesanan",
     name: "PaymentPesanan",
     component: PaymentPesanan
+  },
+  {
+    path:"/product",
+    name: "Product",
+    component: Product
   }
   
 ];

@@ -20,7 +20,7 @@
         <h2 class="my-4">New Item</h2>
         <div class="row text-center py-3">
           <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-            <button type="button" class="btn prod">
+            <router-link type="button" class="btn prod" to="/product">
               <div class="card">
                 <div class="card-body">
                   <img src="@/assets/landing/chest.png" alt />
@@ -28,7 +28,7 @@
                   <p>Rp. 475.000</p>
                 </div>
               </div>
-            </button>
+            </router-link>
           </div>
 
           <div class="col-lg-3 col-md-4 col-sm-6 col-6">
