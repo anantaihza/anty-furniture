@@ -14,7 +14,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav subnav">
-          <button class="nav-item btn btn-light">Living Room</button>
+          <router-link class="nav-item btn btn-light" to="/showroom">Living Room</router-link>
           <button class="nav-item btn btn-light">Dining Room</button>
           <button class="nav-item btn btn-light">Kitchen</button>
           <button class="nav-item btn btn-light">Bedroom</button>
@@ -41,7 +41,7 @@ export default {
   background-color: #ffffff;
   box-shadow: 0 1px 10px 0 grey;
 }
-.subnav button {
+.subnav .btn {
   padding: 2px 8px;
   text-align: center;
   font-size: 15px;
