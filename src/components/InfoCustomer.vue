@@ -9,6 +9,7 @@
             type="text"
             class="form-control border-0"
             id="form-name"
+            v-model="name"
             placeholder="Insert your full name"
           />
         </div>
@@ -18,9 +19,10 @@
         <label for="form-email" class="col-sm-3 col-form-label">Email*</label>
         <div class="col-sm-9">
           <input
-            type="text"
+            type="email"
             class="form-control border-0"
             id="form-email"
+            v-model="email"
             placeholder="Insert your email address"
           />
         </div>
@@ -33,6 +35,7 @@
             type="text"
             class="form-control border-0"
             id="form-address"
+            v-model="address"
             placeholder="Insert your address"
           />
         </div>
@@ -45,15 +48,17 @@
             type="number"
             class="form-control border-0"
             id="form-phoneNumber"
+            v-model="number"
             placeholder="Insert your phone number"
           />
         </div>
       </div>
       <hr />
       <div class="form-group mt-4">
+        <!-- loop from database -->
         <label for="payment-method">Payment Method</label>
-        <select class="form-control border-0" id="payment-method">
-          <option>BCA</option>
+        <select class="form-control border-0" id="payment-method" v-model="paymentMethod">
+          <option>BCA</option>  
           <option>Mandiri</option>
           <option>s</option>
           <option>4</option>
@@ -62,8 +67,9 @@
       </div>
 
       <div class="form-group">
+        <!-- loop from database -->
         <label for="delivery-service">Delivery Service</label>
-        <select class="form-control border-0" id="delivery-service">
+        <select class="form-control border-0" id="delivery-service" v-model="deliveryService">
           <option>GO-BOX</option>
           <option>2</option>
           <option>3</option>
@@ -95,7 +101,18 @@
 // import Footers from "@/components/Footers.vue";
 
 export default {
-  name: "info-customer"
+  name: "info-customer",
+  data() {
+    return {
+      name: "",
+      email: "",
+      address: "",
+      number: "",
+      paymentMethod: "",
+      deliveryService: "",
+      
+    }
+  },
 };
 </script>
 
