@@ -25,7 +25,9 @@
                 <div class="card-body">
                   <img src="@/assets/landing/chest.png" alt />
                   <h4 class="pt-3">Kids Dresser and Chest</h4>
-                  <p>Rp. 475.000</p>
+                  <p>
+                    <price :value="475000" />
+                  </p>
                 </div>
               </div>
             </router-link>
@@ -76,6 +78,7 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
+import Price from "@/components/Price.vue";
 import Footers from "@/components/Footers.vue";
 
 export default {
@@ -83,6 +86,7 @@ export default {
   components: {
     Navbar,
     Subnav,
+    Price,
     Footers
   }
 };
