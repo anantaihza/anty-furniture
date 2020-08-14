@@ -8,7 +8,12 @@
 
 
 export default {
-  name: "app"
+  name: "app",
+  data() {
+    return {
+      dataCustomer: []
+    }
+  },
 };
 </script>
 
