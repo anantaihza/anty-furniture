@@ -85,7 +85,8 @@
 // import Footers from "@/components/Footers.vue";
 
 export default {
-  name: "review-customer"
+  name: "review-customer",
+  props: ["dataCustomer"]
 };
 </script>
 
