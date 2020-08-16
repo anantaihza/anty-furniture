@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar />
+    <navbar :navPayment="true" />
     <subnav />
     <div class="container mt-4 py-4">
       <h2>PAYMENT INFORMATION</h2>

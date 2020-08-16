@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar :navBack="true" />
+    <navbar :navHome="true" />
     <subnav />
     <showroom-head />
     <div class="container" id="preference-product">

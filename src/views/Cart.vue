@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar />
+    <navbar :navHome="true" />
     <subnav />
     <section id="banner">
       <div class="container">

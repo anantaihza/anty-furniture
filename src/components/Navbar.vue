@@ -1,10 +1,30 @@
 <template>
   <div>
-    <div v-if="navBack">
-      <nav class="navbar sticky-top navbar-expand-lg">
-        <router-link type="button" to="/" class="btn btnIcon">
+    <nav class="navbar sticky-top navbar-expand-lg">
+        <div v-if="navHome">
+          <router-link type="button" to="/" class="btn btnIcon">
           <font-awesome-icon :icon="['fas', 'arrow-left']" />
-        </router-link>
+          </router-link>
+        </div>
+        <div v-else-if="navInfoPesanan">
+          <router-link type="button" to="/cart" class="btn btnIcon">
+          <font-awesome-icon :icon="['fas', 'arrow-left']" />
+          </router-link>
+        </div>
+        <div v-else-if="navReviewPesanan">
+          <router-link type="button" to="/infoPesanan" class="btn btnIcon">
+          <font-awesome-icon :icon="['fas', 'arrow-left']" />
+          </router-link>
+        </div>
+        <div v-else-if="navPayment">
+          <router-link type="button" to="/reviewPesanan" class="btn btnIcon">
+          <font-awesome-icon :icon="['fas', 'arrow-left']" />
+          </router-link>
+        </div>
+        <div v-else>
+          <a class="navbar-brand text-white font-weight-bold" href="#">Anty Furniture</a>
+        </div>
+
         <button
           class="navbar-toggler"
           type="button"
@@ -54,63 +74,6 @@
           </ul>
         </div>
       </nav>
-    </div>
-    <div v-else>
-      <nav class="navbar sticky-top navbar-expand-lg">
-        <a class="navbar-brand text-white font-weight-bold" href="#">Anty Furniture</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <font-awesome-icon :icon="['fas', 'bars']" class="text-white" />
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <form class="search mr-5">
-                <input type="text" placeholder="Search.." name="search" class="search-box" />
-                <button type="submit" class="btn btnIcon">
-                  <font-awesome-icon :icon="['fas', 'search']" />
-                </button>
-              </form>
-            </li>
-            <li class="nav-item">
-              <router-link type="button" class="btn btnIcon mr-3" to="/cart">
-                <font-awesome-icon :icon="['fas', 'shopping-cart']" />
-                <span class="badge badge-pill badge-danger"></span>
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <div class="dropdown">
-                <button
-                  class="btn btnIcon dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <font-awesome-icon :icon="['fas', 'user-circle']" />
-                </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  <!-- <a class="dropdown-item" href="#">Login</a> -->
-                   
-                    <router-link class="dropdown-item" to="/profile">Profile</router-link>
-                  
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Logout</a>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
 
    
   </div>
@@ -120,10 +83,23 @@
 export default {
   name: "navbar",
   props: {
-    navBack: {
-      default: true,
+    navHome: {
+      default: false,
+      type: Boolean
+    },
+    navInfoPesanan: {
+      default: false,
+      type: Boolean
+    },
+    navReviewPesanan: {
+      default: false,
+      type: Boolean
+    },
+    navPayment: {
+      default: false,
       type: Boolean
     }
+    
   }
 };
 </script>

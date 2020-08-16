@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar :navBack="true" />
+    <navbar :navHome="true" />
     <subnav />
     <div class="container">
             <div class="row">

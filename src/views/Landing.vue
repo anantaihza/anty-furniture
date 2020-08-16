@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar :navBack="false" />
+    <navbar />
     <subnav />
     <div class="container" id="promo">
       <div class="row">
