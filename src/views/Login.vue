@@ -14,19 +14,19 @@
         <div class="col-md-12 col-lg-6 my-auto">
           <div class="formulir">
             <h1 class="d-block d-sm-block d-md-block d-lg-none">Anty Furniture</h1>
-            <form>
+            <form @submit.prevent="login()">
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" v-model="user.email" />
+                <input type="email" class="form-control" id="email" v-model="email" />
                 <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" v-model="user.password" />
+                <input type="password" class="form-control" id="password" v-model="password" />
                 <a href>Forgot Password ?</a>
               </div>
               <div class="d-flex justify-content-center mt-5">
-                <button class="btn" @click="login">LOGIN</button>
+                <button type="submit" class="btn">LOGIN</button>
               </div>
             </form>
             <router-link
@@ -41,25 +41,49 @@
 </template>
 
 <script>
+import axios from "axios";
 
 export default {
   name: "login",
   data() {
     return {
-      user: {
-        email: "",
-        password: ""
-      }
+      email: "",
+      password: ""
     };
   },
   methods: {
     login: function() {
-      let datanya = {
-        email: this.user.email,
-        password: this.user.password
-      };
-      console.log(datanya.email);
-      console.log(datanya.password);
+      if (this.email.trim() && this.password.trim()) {
+        let email = this.email;
+        let password = this.password;
+
+        const options = {
+          url: "https://rpl.abisatria.my.id//api/customer/login",
+          method: "post",
+          data: {
+            email,
+            password
+          }
+        };
+
+        axios(options).then(response => {
+          const token = response.data.data.token;
+          console.log(response.data.data.token)
+          window.localStorage.setItem('access_token', token)
+
+          if (token) {
+            this.$router.push({
+              name: "Landing",
+              param: {
+                token: token
+              }
+            });
+          }
+        })
+        .catch(e => {
+          alert(e + "\n" + "Gagal Login");
+        });
+      }
     }
   }
 };
