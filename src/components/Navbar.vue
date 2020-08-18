@@ -67,12 +67,13 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 <div v-if="!token">
                   <router-link class="dropdown-item" to="/login">Login</router-link>
+                  <router-link class="dropdown-item" to="/register">Register</router-link>
                 </div>
                 <div v-if="token">
                   <router-link class="dropdown-item" to="/profile">Profile</router-link>
-                </div>
                 <div class="dropdown-divider"></div>
-                <button class="dropdown-item" >Logout</button>
+                <button class="dropdown-item" @click="logout">Logout</button>
+                </div>
               </div>
             </div>
           </li>
@@ -115,7 +116,15 @@ export default {
       console.log("mengakses dengan token");
     }
   },
-  
+  methods: {
+    logout: function() {
+      localStorage.removeItem("access_token");
+
+      this.$router.push({
+        name: "Login"
+      });
+    }
+  }
 };
 </script>
 
