@@ -14,6 +14,17 @@
         <div class="col-md-12 col-lg-6 my-auto">
           <div class="formulir">
             <h1 class="d-block d-sm-block d-md-block d-lg-none">Anty Furniture</h1>
+            <div v-if="error" class="alert alert-warning alert-dismissible fade show" role="alert">
+              Gagal Login
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
             <form @submit.prevent="login()">
               <div class="form-group">
                 <label for="email">Email</label>
@@ -33,6 +44,7 @@
               class="d-flex justify-content-center mt-3"
               to="/register"
             >Don't have an account ?</router-link>
+            
           </div>
         </div>
       </div>
@@ -48,7 +60,8 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      error: false
     };
   },
   methods: {
@@ -66,23 +79,27 @@ export default {
           }
         };
 
-        axios(options).then(response => {
-          const token = response.data.data.token;
-          console.log(response.data.data.token)
-          window.localStorage.setItem('access_token', token)
+        axios(options)
+          .then(response => {
+            const token = response.data.data.token;
+            console.log(response.data.data.token);
+            localStorage.setItem('access_token', token);
 
-          if (token) {
-            this.$router.push({
-              name: "Landing",
-              params: {
-                token: token
-              }
-            });
-          }
-        })
-        .catch(e => {
-          alert(e + "\n" + "Gagal Login");
-        });
+            if (token) {
+              this.$router.push({
+                name: "Landing",
+                params: {
+                  token: token
+                }
+              });
+            }
+          })
+          .catch(e => {
+            // alert(e);
+            console.log(e)
+            let error = true;
+            this.error = error
+          });
       }
     }
   }

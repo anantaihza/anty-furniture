@@ -95,7 +95,7 @@ export default {
     }
   },
   created() {
-    const token = this.$route.params.token;
+    const token = localStorage.getItem('access_token');
     if (token) {
       this.token = token;
       console.log("mengakses dengan token")
