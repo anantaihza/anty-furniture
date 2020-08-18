@@ -74,7 +74,7 @@ export default {
           if (token) {
             this.$router.push({
               name: "Landing",
-              param: {
+              params: {
                 token: token
               }
             });

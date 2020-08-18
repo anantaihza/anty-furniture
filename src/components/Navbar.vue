@@ -65,7 +65,10 @@
                   <font-awesome-icon :icon="['fas', 'user-circle']" />
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                  <div v-if="!token">
+
                    <router-link class="dropdown-item" to="/login">Login</router-link>
+                  </div>
                    <router-link class="dropdown-item" to="/profile">Profile</router-link>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#">Logout</a>
@@ -101,6 +104,18 @@ export default {
       type: Boolean
     }
     
+  },
+  data() {
+    return {
+      token: ""
+    }
+  },
+  created() {
+    const token = this.$route.params.token;
+    if (token) {
+      this.token = token;
+      console.log("mengakses dengan token")
+    }
   }
 };
 </script>

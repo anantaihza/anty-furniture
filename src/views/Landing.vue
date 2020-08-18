@@ -88,6 +88,18 @@ export default {
     Subnav,
     Price,
     Footers
+  },
+  data() {
+    return {
+      token: ""
+    }
+  },
+  created() {
+    const token = this.$route.params.token;
+    if (token) {
+      this.token = token;
+      console.log("mengakses dengan token")
+    }
   }
 };
 </script>
