@@ -19,7 +19,7 @@
           <p>Materials : Brass with a Double Lined Linen Shade</p>
         </div>
         <div class="col-lg-3 col-md-3 m-auto pt-4 text-center">
-          <quantity />
+          <quantity @child-qty="qtyValue" />
           <div class="col-12 mt-4 text-center">
             <button type="button" class="btn buy btn-sm btn-block">BUY</button>
             <button type="button" class="btn basket btn-sm btn-block">Add to Basket</button>
@@ -46,6 +46,17 @@ export default {
     Subnav,
     ScrollProduct,
     Quantity
+  },
+  data() {
+    return {
+      qty: 1
+    }
+  },
+  methods: {
+    // Gets the checkbox information from the child component
+    qtyValue: function(params) {
+      this.qty = params;
+    }
   }
 };
 </script>

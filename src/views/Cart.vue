@@ -43,7 +43,7 @@
                 </div>
               </td>
               <td>
-                <quantity />
+                <quantity @child-qty="qtyValue" />
               </td>
               <td>Rp. 235.000</td>
             </tr>
@@ -65,7 +65,7 @@
                 </div>
               </td>
               <td>
-                <quantity />
+                <quantity @child-qty="qtyValue" />
               </td>
               <td>Rp. 235.000</td>
             </tr>
@@ -87,6 +87,17 @@ export default {
     Navbar,
     Subnav,
     Quantity
+  },
+  data() {
+    return {
+      qty: 1
+    }
+  },
+  methods: {
+    // Gets the checkbox information from the child component
+    qtyValue: function(params) {
+      this.qty = params;
+    }
   }
 };
 </script>

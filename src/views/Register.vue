@@ -71,7 +71,7 @@
                   v-slot="{ errors, required, ariaInput, ariaMsg }"
                 >
                   <div class="form-group">
-                    <label for="repassword">Re-Password</label>
+                    <label for="repassword">Password Confirmation</label>
                     <input
                       type="password"
                       class="form-control"

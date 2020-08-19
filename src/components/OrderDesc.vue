@@ -18,7 +18,7 @@
             <td>
               <p class="font-weight-bold">Antique Brass Tripod Floor Lamp</p>
               <p>Rp. 235.000</p>
-              <quantity></quantity>
+              <quantity @child-qty="qtyValue" />
             </td>
           </tr>
           <tr>
@@ -28,7 +28,7 @@
             <td>
               <p class="font-weight-bold">Pello Chair</p>
               <p>Rp. 280.000</p>
-              <quantity></quantity>
+              <quantity @child-qty="qtyValue" />
             </td>
           </tr>
         </tbody>
@@ -45,6 +45,17 @@ export default {
   name: "order-desc",
   components: {
     Quantity
+  },
+  data() {
+    return {
+      qty: 1
+    }
+  },
+  methods: {
+    // Gets the checkbox information from the child component
+    qtyValue: function(params) {
+      this.qty = params;
+    }
   }
 };
 </script>
