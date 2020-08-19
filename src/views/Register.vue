@@ -14,40 +14,78 @@
         <div class="col-md-12 col-lg-6 my-auto">
           <div class="formulir">
             <h1 class="d-block d-sm-block d-md-block d-lg-none">Anty Furniture</h1>
-            <form>
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" v-model="user.name" required/>
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" v-model="user.email" required/>
-              </div>
-              <div class="form-group">
-              <label for="phoneNumber" >Phone Number</label>
-              <div class="phoneNumber">
-                <input
-                  type="number"
-                  class="form-control"
-                  id="phoneNumber"
-                  v-model="user.phoneNumber"
-                  required
-                />
-              </div>
-            </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" v-model="user.password" required/>
-              </div>
-              <div class="form-group">
-                <label for="repassword">Re-Password</label>
-                <input type="password" class="form-control" id="repassword" v-model="user.repassword" required/>
-              </div>
+            <ValidationObserver v-slot="{ passes }">
+              <form @submit.prevent="passes(onSubmit)">
+                <ValidationProvider
+                  tag="div"
+                  rules="required"
+                  v-slot="{ errors, required, ariaInput, ariaMsg }"
+                >
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" v-model="name" />
+                    <span v-bind="ariaMsg" v-if="errors[0]">{{ errors[0] }}</span>
+                  </div>
+                </ValidationProvider>
 
-              <div class="d-flex justify-content-center mt-5">
-                <button type="submit" class="btn" @click="register">SIGN UP</button>
-              </div>
-            </form>
+                <ValidationProvider
+                  tag="div"
+                  rules="required|email"
+                  v-slot="{ errors, required, ariaInput, ariaMsg }"
+                >
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" v-model="email" />
+                    <span v-bind="ariaMsg" v-if="errors[0]">{{ errors[0] }}</span>
+                  </div>
+                </ValidationProvider>
+
+                <div class="form-group">
+                  <label for="phoneNumber">Phone Number</label>
+                  <div class="phoneNumber">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="phoneNumber"
+                      v-model="phoneNumber"
+                      required
+                    />
+                  </div>
+                </div>
+                <ValidationProvider
+                  tag="div"
+                  rules="required|min:6|confirmed:pass"
+                  v-slot="{ errors, required, ariaInput, ariaMsg }"
+                >
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" v-model="password" />
+                    <span v-bind="ariaMsg" v-if="errors[0]">{{ errors[0] }}</span>
+                  </div>
+                </ValidationProvider>
+
+                <ValidationProvider
+                  tag="div"
+                  rules="required"
+                  vid="pass"
+                  v-slot="{ errors, required, ariaInput, ariaMsg }"
+                >
+                  <div class="form-group">
+                    <label for="repassword">Re-Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="repassword"
+                      v-model="repassword"
+                    />
+                    <span v-bind="ariaMsg" v-if="errors[0]">{{ errors[0] }}</span>
+                  </div>
+                </ValidationProvider>
+                <div class="d-flex justify-content-center mt-5">
+                  <button type="submit" class="btn">SIGN UP</button>
+                </div>
+              </form>
+            </ValidationObserver>
           </div>
         </div>
       </div>
@@ -55,26 +93,28 @@
   </div>
 </template>
 
+
 <script>
+import { ValidationObserver } from "vee-validate";
+import { ValidationProvider } from "vee-validate";
+
 export default {
   name: "register",
+  components: {
+    ValidationObserver,
+    ValidationProvider
+  },
   data() {
     return {
-      user: {
-        name: "",
-        email: "",
-        phoneNumber: "",
-        password: "",
-        repassword: ""
-      }
+      name: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      repassword: ""
     };
   },
   methods: {
-    // register: function() {
-    //   console.log(this.user.name);
-    //   console.log(this.user.email);
-    //   console.log(this.user.password);
-    // }
+    onSubmit: function() {}
   }
 };
 </script>
@@ -126,7 +166,7 @@ form .btn:hover {
   margin: 0;
 }
 /* Firefox */
-.phoneNumber input[type=number] {
+.phoneNumber input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>
