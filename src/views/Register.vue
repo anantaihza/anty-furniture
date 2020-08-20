@@ -47,7 +47,7 @@
                       type="number"
                       class="form-control"
                       id="phoneNumber"
-                      v-model="phoneNumber"
+                      v-model="phone"
                       required
                     />
                   </div>
@@ -76,7 +76,7 @@
                       type="password"
                       class="form-control"
                       id="repassword"
-                      v-model="repassword"
+                      v-model="rePassword"
                     />
                     <span v-bind="ariaMsg" v-if="errors[0]">{{ errors[0] }}</span>
                   </div>
@@ -97,6 +97,7 @@
 <script>
 import { ValidationObserver } from "vee-validate";
 import { ValidationProvider } from "vee-validate";
+import axios from 'axios';
 
 export default {
   name: "register",
@@ -108,13 +109,43 @@ export default {
     return {
       name: "",
       email: "",
-      phoneNumber: "",
+      phone: "",
       password: "",
-      repassword: ""
+      rePassword: ""
     };
   },
   methods: {
-    onSubmit: function() {}
+    onSubmit: function() {
+      if (this.email.trim() && this.password.trim() && this.rePassword.trim()) {
+
+        let name, email, phone, password, rePassword;
+        name = this.name;
+        email = this.email;
+        phone = this.phone;
+        password = this.password;
+        rePassword = this.rePassword;
+
+        const option = {
+          url: "https://rpl.abisatria.my.id/api/customer/",
+          method: "post",
+          data: { name, email, phone, password, rePassword }
+        }
+        axios(option)
+          .then(response => {
+            response.data
+
+            this.$router.push({
+                name: "Login"
+            });
+
+          })
+          .catch(e => {
+            // alert(e);
+            console.log(e)
+          });
+        
+      }
+    }
   }
 };
 </script>
