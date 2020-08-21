@@ -7,41 +7,43 @@
         <tbody>
           <tr>
             <td>
-              <img v-bind="{ src : room.roomphotos[0].urlPhoto, alt : room.roomName }" width="100%"/>
+              <img v-bind="{ src : room.roomphotos[0].urlPhoto, alt : room.roomName }" width="100%" />
             </td>
             <td>
-              <h1>{{ room.roomName }}</h1>
-              <p>{{ room.roomDesc }}</p>
-              <div class="row category text-center">
-                <button
-                  @click="cNow('')"
-                  class="btn btn-light col-lg-1 col-md-9 col-sm-8 col-11"
-                  active
-                >All</button>
-                <button
-                  @click="cNow('sofa')"
-                  class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
-                >Sofa</button>
-                <button
-                  @click="cNow('lamp')"
-                  class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
-                >Lamp</button>
-                <button
-                  @click="cNow('carpet')"
-                  class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
-                >Carpet</button>
-                <button
-                  @click="cNow('chair')"
-                  class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
-                >Chair</button>
-                <button
-                  @click="cNow('table')"
-                  class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
-                >Table</button>
-                <button
-                  @click="cNow('decoration')"
-                  class="btn btn-light col-lg-2 col-md-4 col-sm-4 col-5"
-                >Decoration</button>
+              <div class="container">
+                <h1>{{ room.roomName }}</h1>
+                <p>{{ room.roomDesc }}</p>
+                <div class="row category text-center">
+                  <button
+                    @click="cNow('')"
+                    class="btn btn-light col-lg-1 col-md-9 col-sm-8 col-11"
+                    active
+                  >All</button>
+                  <button
+                    @click="cNow('sofa')"
+                    class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
+                  >Sofa</button>
+                  <button
+                    @click="cNow('lamp')"
+                    class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
+                  >Lamp</button>
+                  <button
+                    @click="cNow('carpet')"
+                    class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
+                  >Carpet</button>
+                  <button
+                    @click="cNow('chair')"
+                    class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
+                  >Chair</button>
+                  <button
+                    @click="cNow('table')"
+                    class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
+                  >Table</button>
+                  <button
+                    @click="cNow('decoration')"
+                    class="btn btn-light col-lg-2 col-md-4 col-sm-4 col-5"
+                  >Decoration</button>
+                </div>
               </div>
             </td>
           </tr>
@@ -208,23 +210,22 @@ export default {
     };
   },
   created() {
-    
     const options = {
-          url: "https://rpl.abisatria.my.id/api/room/",
-          method: "get"
-        };
+      url: "https://rpl.abisatria.my.id/api/room/",
+      method: "get"
+    };
 
-        axios(options)
-          .then(response => {
-             this.room = response.data.data[1];
-            console.log(this.room);
-          })
-          .catch(e => {
-            // alert(e);
-            console.log(e)
-          });
+    axios(options)
+      .then(response => {
+        this.room = response.data.data[1];
+        console.log(this.room);
+      })
+      .catch(e => {
+        // alert(e);
+        console.log(e);
+      });
   },
-  
+
   methods: {
     cNow: function(text) {
       this.categNow = text;
