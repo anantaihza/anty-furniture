@@ -7,18 +7,41 @@
         <tbody>
           <tr>
             <td>
-              <img src="@/assets/showroom/living-room.png" alt />
+              <img v-bind="{ src : room.roomphotos[0].urlPhoto, alt : room.roomName }" width="100%"/>
             </td>
-            <td class>
-              <h1>Living Room</h1>
+            <td>
+              <h1>{{ room.roomName }}</h1>
+              <p>{{ room.roomDesc }}</p>
               <div class="row category text-center">
-                <button @click="cNow('')" class="btn btn-light col-lg-1 col-md-9 col-sm-8 col-11" active>All</button>
-                <button @click="cNow('sofa')" class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5">Sofa</button>
-                <button @click="cNow('lamp')" class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5">Lamp</button>
-                <button @click="cNow('carpet')" class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5">Carpet</button>
-                <button @click="cNow('chair')" class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5">Chair</button>
-                <button @click="cNow('table')" class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5">Table</button>
-                <button @click="cNow('decoration')" class="btn btn-light col-lg-2 col-md-4 col-sm-4 col-5">Decoration</button>
+                <button
+                  @click="cNow('')"
+                  class="btn btn-light col-lg-1 col-md-9 col-sm-8 col-11"
+                  active
+                >All</button>
+                <button
+                  @click="cNow('sofa')"
+                  class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
+                >Sofa</button>
+                <button
+                  @click="cNow('lamp')"
+                  class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
+                >Lamp</button>
+                <button
+                  @click="cNow('carpet')"
+                  class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
+                >Carpet</button>
+                <button
+                  @click="cNow('chair')"
+                  class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
+                >Chair</button>
+                <button
+                  @click="cNow('table')"
+                  class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
+                >Table</button>
+                <button
+                  @click="cNow('decoration')"
+                  class="btn btn-light col-lg-2 col-md-4 col-sm-4 col-5"
+                >Decoration</button>
               </div>
             </td>
           </tr>
@@ -169,6 +192,7 @@
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
 import Footers from "@/components/Footers.vue";
+import axios from "axios";
 
 export default {
   name: "living-room",
@@ -179,9 +203,28 @@ export default {
   },
   data() {
     return {
-      categNow: ""
+      categNow: "",
+      room: []
     };
   },
+  created() {
+    
+    const options = {
+          url: "https://rpl.abisatria.my.id/api/room/",
+          method: "get"
+        };
+
+        axios(options)
+          .then(response => {
+             this.room = response.data.data[1];
+            console.log(this.room);
+          })
+          .catch(e => {
+            // alert(e);
+            console.log(e)
+          });
+  },
+  
   methods: {
     cNow: function(text) {
       this.categNow = text;

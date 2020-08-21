@@ -10,7 +10,7 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span id="categories">Categories</span>
+        <span id="categories">Room</span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav subnav">
