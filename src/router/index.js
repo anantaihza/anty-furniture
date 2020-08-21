@@ -9,7 +9,8 @@ import InfoPesanan from "../views/InfoPesanan.vue";
 import ReviewPesanan from "../views/ReviewPesanan.vue";
 import PaymentPesanan from "../views/PaymentPesanan.vue";
 import Product from "../views/Product.vue";
-import Showroom from "../views/Showroom.vue";
+import LivingRoom from "../views/LivingRoom.vue";
+import BedRoom from "../views/BedRoom.vue";
 
 Vue.use(VueRouter);
 
@@ -60,11 +61,15 @@ const routes = [
     component: Product
   },
   {
-    path:"/showroom",
-    name: "Showroom",
-    component: Showroom
+    path:"/living-room",
+    name: "LivingRoom",
+    component: LivingRoom
+  },
+  {
+    path:"/bedroom",
+    name: "BedRoom",
+    component: BedRoom
   }
-  
 ];
 
 const router = new VueRouter({

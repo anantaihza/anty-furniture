@@ -14,10 +14,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav subnav">
-          <router-link class="nav-item btn btn-light" to="/showroom">Living Room</router-link>
+          <router-link class="nav-item btn btn-light" to="/living-room">Living Room</router-link>
           <button class="nav-item btn btn-light">Dining Room</button>
           <button class="nav-item btn btn-light">Kitchen</button>
-          <button class="nav-item btn btn-light">Bedroom</button>
+          <router-link class="nav-item btn btn-light" to="/bedroom">Bedroom</router-link>
           <button class="nav-item btn btn-light">Bathroom</button>
           <button class="nav-item btn btn-light">Outdoor</button>
         </div>

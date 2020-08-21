@@ -2,8 +2,31 @@
   <div>
     <navbar :navHome="true" />
     <subnav />
-    <showroom-head />
-    <div class="container" id="preference-product">
+    <div class="container" id="head-category">
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <td>
+              <img src="@/assets/showroom/living-room.png" alt />
+            </td>
+            <td class>
+              <h1>Living Room</h1>
+              <div class="row category text-center">
+                <button @click="cNow('')" class="btn btn-light col-lg-1 col-md-9 col-sm-8 col-11" active>All</button>
+                <button @click="cNow('sofa')" class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5">Sofa</button>
+                <button @click="cNow('lamp')" class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5">Lamp</button>
+                <button @click="cNow('carpet')" class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5">Carpet</button>
+                <button @click="cNow('chair')" class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5">Chair</button>
+                <button @click="cNow('table')" class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5">Table</button>
+                <button @click="cNow('decoration')" class="btn btn-light col-lg-2 col-md-4 col-sm-4 col-5">Decoration</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div v-if="categNow === 'sofa'" class="container" id="preference-product">
       <div class="row text-center">
         <div class="col-md-4 col-lg-3 col-sm-6 col-6">
           <button type="button" class="btn">
@@ -101,6 +124,43 @@
         </div>
       </div>
     </div>
+
+    <div v-else-if="categNow === 'lamp'" class="container" id="preference-product">
+      <div class="row text-center">
+        <p>Mipan....</p>
+      </div>
+    </div>
+
+    <div v-else-if="categNow === 'carpet'" class="container" id="preference-product">
+      <div class="row text-center">
+        <p>Zuzuzu....Zuzuzu</p>
+      </div>
+    </div>
+
+    <div v-else-if="categNow === 'chair'" class="container" id="preference-product">
+      <div class="row text-center">
+        <p>Mipan Yakakus</p>
+      </div>
+    </div>
+
+    <div v-else-if="categNow === 'table'" class="container" id="preference-product">
+      <div class="row text-center">
+        <p>Nyam Nyam Nyam..</p>
+      </div>
+    </div>
+
+    <div v-else-if="categNow === 'decoration'" class="container" id="preference-product">
+      <div class="row text-center">
+        <p>Mipaaaaaannn..... zuzuzuzuzuzuzuzu</p>
+      </div>
+    </div>
+
+    <div v-else class="container" id="preference-product">
+      <div class="row text-center">
+        <p>Mantul</p>
+      </div>
+    </div>
+
     <footers />
   </div>
 </template>
@@ -108,16 +168,24 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
-import ShowroomHead from "@/components/ShowroomHead.vue";
 import Footers from "@/components/Footers.vue";
 
 export default {
-  name: "product",
+  name: "living-room",
   components: {
     Navbar,
     Subnav,
-    ShowroomHead,
     Footers
+  },
+  data() {
+    return {
+      categNow: ""
+    };
+  },
+  methods: {
+    cNow: function(text) {
+      this.categNow = text;
+    }
   }
 };
 </script>
@@ -140,5 +208,19 @@ export default {
   margin: 20px auto;
   height: 12vw;
   object-fit: contain;
+}
+
+#head-category {
+  margin-top: 50px;
+}
+.category button {
+  margin-right: 20px;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 5px rgb(204, 204, 204);
+  border-radius: 18px;
+  padding: 3px 10px;
+}
+.category button:focus {
+  background-color: #ebebeb;
 }
 </style>
