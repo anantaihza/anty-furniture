@@ -7,42 +7,21 @@
         <tbody>
           <tr>
             <td>
-              <img v-bind="{ src : room.roomphotos[1].urlPhoto, alt : room.roomName }" width="100%"/>
+              <img v-bind="{ src : room.roomphotos[1].urlPhoto, alt : room.roomName }" width="100%" />
             </td>
             <td>
               <div class="container">
                 <h1>{{ room.roomName }}</h1>
                 <p>{{ room.roomDesc }}</p>
-                <div class="row category text-center">
-                  <button
-                    @click="cNow('')"
-                    class="btn btn-light col-lg-1 col-md-9 col-sm-8 col-11"
-                    active
-                  >All</button>
-                  <button
-                    @click="cNow('sofa')"
-                    class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
-                  >Sofa</button>
-                  <button
-                    @click="cNow('lamp')"
-                    class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
-                  >Lamp</button>
-                  <button
-                    @click="cNow('carpet')"
-                    class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
-                  >Carpet</button>
-                  <button
-                    @click="cNow('chair')"
-                    class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
-                  >Chair</button>
-                  <button
-                    @click="cNow('table')"
-                    class="btn btn-light col-lg-1 col-md-4 col-sm-4 col-5"
-                  >Table</button>
-                  <button
-                    @click="cNow('decoration')"
-                    class="btn btn-light col-lg-2 col-md-4 col-sm-4 col-5"
-                  >Decoration</button>
+                <div class="row">
+                  <div v-for="(ctg,index) in category" :key="index">
+                    <div class="category text-center">
+                      <button
+                        @click="cNow(ctg.categoryName)"
+                        class="btn btn-light col-lg-11 col-md-11 col-sm-11 col-11"
+                      >{{ ctg.categoryName }}</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </td>
@@ -206,10 +185,12 @@ export default {
   data() {
     return {
       categNow: "",
-      room: []
+      room: [],
+      category: []
     };
   },
   created() {
+    //room
     const options = {
       url: "https://rpl.abisatria.my.id/api/room/",
       method: "get"
@@ -224,10 +205,27 @@ export default {
         // alert(e);
         console.log(e);
       });
+
+    //category
+    const optionsC = {
+      url: "https://rpl.abisatria.my.id/api/category/",
+      method: "get"
+    };
+
+    axios(optionsC)
+      .then(response => {
+        this.category = response.data.data;
+        console.log(this.category);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   },
   methods: {
     cNow: function(text) {
       this.categNow = text;
+      console.log(this.categNow);
+      
     }
   }
 };

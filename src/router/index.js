@@ -1,20 +1,20 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Landing from "../views/Landing.vue";
 import Cart from "../views/Cart.vue";
-import Profile from "../views/Profile.vue";
 import Login from "../views/Login.vue";
+import Profile from "../views/Profile.vue";
+import Landing from "../views/Landing.vue";
+import Product from "../views/Product.vue";
+import BedRoom from "../views/BedRoom.vue";
+import Kitchen from "../views/Kitchen.vue";
+import Outdoor from "../views/Outdoor.vue";
 import Register from "../views/Register.vue";
+import Bathroom from "../views/Bathroom.vue";
+import DiningRoom from "../views/DiningRoom.vue";
+import LivingRoom from "../views/LivingRoom.vue";
 import InfoPesanan from "../views/InfoPesanan.vue";
 import ReviewPesanan from "../views/ReviewPesanan.vue";
 import PaymentPesanan from "../views/PaymentPesanan.vue";
-import Product from "../views/Product.vue";
-import LivingRoom from "../views/LivingRoom.vue";
-import BedRoom from "../views/BedRoom.vue";
-import DiningRoom from "../views/DiningRoom.vue";
-import Kitchen from "../views/Kitchen.vue";
-import Bathroom from "../views/Bathroom.vue";
-import Outdoor from "../views/Outdoor.vue";
 
 Vue.use(VueRouter);
 
