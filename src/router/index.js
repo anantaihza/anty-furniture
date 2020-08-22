@@ -11,6 +11,7 @@ import PaymentPesanan from "../views/PaymentPesanan.vue";
 import Product from "../views/Product.vue";
 import LivingRoom from "../views/LivingRoom.vue";
 import BedRoom from "../views/BedRoom.vue";
+import DiningRoom from "../views/DiningRoom.vue";
 
 Vue.use(VueRouter);
 
@@ -64,6 +65,11 @@ const routes = [
     path:"/living-room",
     name: "LivingRoom",
     component: LivingRoom
+  },
+  {
+    path:"/dining-room",
+    name: "DiningRoom",
+    component: DiningRoom
   },
   {
     path:"/bedroom",
