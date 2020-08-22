@@ -12,6 +12,7 @@ import Product from "../views/Product.vue";
 import LivingRoom from "../views/LivingRoom.vue";
 import BedRoom from "../views/BedRoom.vue";
 import DiningRoom from "../views/DiningRoom.vue";
+import Kitchen from "../views/Kitchen.vue";
 
 Vue.use(VueRouter);
 
@@ -75,6 +76,11 @@ const routes = [
     path:"/bedroom",
     name: "BedRoom",
     component: BedRoom
+  },
+  {
+    path:"/kitchen",
+    name: "Kitchen",
+    component: Kitchen
   }
 ];
 

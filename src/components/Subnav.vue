@@ -16,7 +16,7 @@
         <div class="navbar-nav subnav">
           <router-link class="nav-item btn btn-light" to="/living-room">Living Room</router-link>
           <router-link class="nav-item btn btn-light" to="/dining-room">Dining Room</router-link>
-          <button class="nav-item btn btn-light">Kitchen</button>
+          <router-link class="nav-item btn btn-light" to="/kitchen">Kitchen</router-link>
           <router-link class="nav-item btn btn-light" to="/bedroom">Bedroom</router-link>
           <button class="nav-item btn btn-light">Bathroom</button>
           <button class="nav-item btn btn-light">Outdoor</button>
