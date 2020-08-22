@@ -214,8 +214,19 @@ export default {
 
     axios(optionsC)
       .then(response => {
-        this.category = response.data.data;
-        console.log(this.category);
+        // console.log(this.room)
+        let dataCategory = [];
+        let categories = response.data.data;
+        categories.map(data => {
+          data.rooms.map(subdata => {
+            if (this.room.id == subdata.id) {
+              dataCategory.push(data);
+              // console.log(data.categoryName)
+            }
+          });
+        });
+        this.category = dataCategory;
+        console.log("categories", this.category);
       })
       .catch(e => {
         console.log(e);
@@ -225,7 +236,6 @@ export default {
     cNow: function(text) {
       this.categNow = text;
       console.log(this.categNow);
-      
     }
   }
 };
