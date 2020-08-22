@@ -7,12 +7,12 @@
         <tbody>
           <tr>
             <td>
-              <img v-bind="{ src : room.roomphotos[1].urlPhoto, alt : room.roomName }" width="100%" />
+              <img v-bind="{ src : room[0].roomphotos[1].urlPhoto, alt : room.roomName }" width="100%" />
             </td>
             <td>
               <div class="container">
-                <h1>{{ room.roomName }}</h1>
-                <p>{{ room.roomDesc }}</p>
+                <h1>{{ room[0].roomName }}</h1>
+                <p>{{ room[0].roomDesc }}</p>
                 <div class="row">
                   <div v-for="(ctg,index) in category" :key="index">
                     <div class="category text-center">
@@ -186,7 +186,8 @@ export default {
     return {
       categNow: "",
       room: [],
-      category: []
+      category: [],
+      idPage: 1
     };
   },
   created() {
@@ -198,8 +199,22 @@ export default {
 
     axios(options)
       .then(response => {
-        this.room = response.data.data[0];
+        // this.room = response.data.data[0];
         console.log(this.room);
+        let dataPage = [];
+        let dataRoom = response.data.data;
+        dataRoom.map(data => {
+
+          console.log("data id", data.id)
+          console.log("data idPage", this.idPage)
+          if (data.id == this.idPage) {
+          //    dataPage.push(data);
+          //    console.log("test",data)
+            dataPage.push(data);
+          }
+        })
+        console.log("data page",dataPage)
+        this.room = dataPage;
       })
       .catch(e => {
         // alert(e);
@@ -219,14 +234,14 @@ export default {
         let categories = response.data.data;
         categories.map(data => {
           data.rooms.map(subdata => {
-            if (this.room.id == subdata.id) {
+            if (this.room[0].id == subdata.id) {
               dataCategory.push(data);
               // console.log(data.categoryName)
             }
           });
         });
+        console.log("categories", dataCategory);
         this.category = dataCategory;
-        console.log("categories", this.category);
       })
       .catch(e => {
         console.log(e);
