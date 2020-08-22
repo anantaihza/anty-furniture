@@ -14,6 +14,7 @@ import BedRoom from "../views/BedRoom.vue";
 import DiningRoom from "../views/DiningRoom.vue";
 import Kitchen from "../views/Kitchen.vue";
 import Bathroom from "../views/Bathroom.vue";
+import Outdoor from "../views/Outdoor.vue";
 
 Vue.use(VueRouter);
 
@@ -87,6 +88,11 @@ const routes = [
     path:"/bathroom",
     name: "Bathroom",
     component: Bathroom
+  },
+  {
+    path:"/outdoor",
+    name: "Outdoor",
+    component: Outdoor
   }
 ];
 

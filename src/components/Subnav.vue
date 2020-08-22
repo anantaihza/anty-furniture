@@ -19,7 +19,7 @@
           <router-link class="nav-item btn btn-light" to="/kitchen">Kitchen</router-link>
           <router-link class="nav-item btn btn-light" to="/bedroom">Bedroom</router-link>
           <router-link class="nav-item btn btn-light" to="/bathroom">Bathroom</router-link>
-          <button class="nav-item btn btn-light">Outdoor</button>
+          <router-link class="nav-item btn btn-light" to="/outdoor">Outdoor</router-link>
         </div>
         <div class="information">
           <a href="#">Service Information</a>
