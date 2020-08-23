@@ -19,55 +19,18 @@
       <div class="container" id="new-items">
         <h2 class="my-4">New Item</h2>
         <div class="row text-center py-3">
-          <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-            <router-link type="button" class="btn prod" to="/product">
-              <div class="card">
-                <div class="card-body">
-                  <img src="@/assets/landing/chest.png" alt />
-                  <h4 class="pt-3">Kids Dresser and Chest</h4>
-                  <p>
-                    <price :value="475000" />
-                  </p>
-                </div>
-              </div>
-            </router-link>
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="item in newItem" :key="item.id">
             <button type="button" class="btn prod">
               <div class="card">
                 <div class="card-body">
-                  <img src="@/assets/landing/cabinet.png" alt />
-                  <h4 class="pt-3">Royal Medicinal Cabinet</h4>
-                  <p>Rp. 390.000</p>
+                  <img v-bind="{ src : item.productphotos[0].urlPhoto, alt : item.productName }" />
+                  <h4 class="pt-3">{{ item.productName }}</h4>
+                  <price :value="item.productPrice" />
                 </div>
               </div>
             </button>
           </div>
 
-          <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-            <button type="button" class="btn prod">
-              <div class="card">
-                <div class="card-body">
-                  <img src="@/assets/landing/chair.png" alt />
-                  <h4 class="pt-3">Pello Chair</h4>
-                  <p>Rp. 280.000</p>
-                </div>
-              </div>
-            </button>
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-            <button type="button" class="btn prod">
-              <div class="card">
-                <div class="card-body">
-                  <img src="@/assets/landing/lamp.png" alt />
-                  <h4 class="pt-3">Lampan Table Lamp</h4>
-                  <p>Rp. 185.000</p>
-                </div>
-              </div>
-            </button>
-          </div>
         </div>
       </div>
       <footers></footers>
@@ -80,6 +43,7 @@ import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
 import Price from "@/components/Price.vue";
 import Footers from "@/components/Footers.vue";
+import axios from "axios";
 
 export default {
   name: "landing",
@@ -91,7 +55,8 @@ export default {
   },
   data() {
     return {
-      token: ""
+      token: "",
+      newItem: []
     }
   },
   created() {
@@ -100,6 +65,22 @@ export default {
       this.token = token;
       console.log("mengakses dengan token")
     }
+
+    //new Item
+    const options = {
+      url: "https://rpl.abisatria.my.id/api/search/newItems/product",
+      method: "get"
+    };
+
+    axios(options)
+      .then(response => {
+        this.newItem = response.data.data;
+        console.log(this.newItem)
+
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 };
 </script>
