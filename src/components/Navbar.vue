@@ -71,8 +71,6 @@
                 </div>
                 <div v-if="token">
                   <router-link class="dropdown-item" to="/profile">Profile</router-link>
-                <div class="dropdown-divider"></div>
-                <button class="dropdown-item" @click="logout">Logout</button>
                 </div>
               </div>
             </div>
@@ -114,15 +112,6 @@ export default {
     if (token) {
       this.token = token;
       console.log("mengakses dengan token");
-    }
-  },
-  methods: {
-    logout: function() {
-      localStorage.removeItem("access_token");
-
-      this.$router.push({
-        name: "Login"
-      });
     }
   }
 };

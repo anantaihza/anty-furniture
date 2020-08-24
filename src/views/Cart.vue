@@ -22,6 +22,8 @@
               <th scope="col">Product</th>
               <th scope="col">Jumlah</th>
               <th scope="col">Subtotal</th>
+              <th scope="col">Remove</th>
+
             </tr>
           </thead>
           <tbody>
@@ -46,6 +48,11 @@
                 <quantity @child-qty="qtyValue" />
               </td>
               <td>Rp. 235.000</td>
+              <td>
+                <button class="btn btnRemove">
+                  <font-awesome-icon :icon="['fas', 'trash']" />
+                </button>
+              </td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -68,6 +75,11 @@
                 <quantity @child-qty="qtyValue" />
               </td>
               <td>Rp. 235.000</td>
+              <td>
+                <button class="btn btnRemove">
+                  <font-awesome-icon :icon="['fas', 'trash']" />
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -134,5 +146,11 @@ export default {
 }
 #cart table tbody td .box button:hover {
   background-color: #d4d4d4;
+}
+.btnRemove {
+  color:rgb(54, 54, 54);
+}
+.btnRemove:hover {
+  background: rgb(228, 228, 228);
 }
 </style>
