@@ -15,6 +15,8 @@ import LivingRoom from "../views/LivingRoom.vue";
 import InfoPesanan from "../views/InfoPesanan.vue";
 import ReviewPesanan from "../views/ReviewPesanan.vue";
 import PaymentPesanan from "../views/PaymentPesanan.vue";
+import ForgetPass from "../views/ForgetPass.vue";
+import ConfirmForgetPass from "../views/ConfirmForgetPass.vue";
 
 Vue.use(VueRouter);
 
@@ -93,6 +95,16 @@ const routes = [
     path:"/outdoor",
     name: "Outdoor",
     component: Outdoor
+  },
+  {
+    path:"/forgetpass",
+    name: "ForgetPass",
+    component: ForgetPass
+  },
+  {
+    path:"/confirmforgetpass",
+    name: "ConfirmForgetPass",
+    component: ConfirmForgetPass
   }
 ];
 

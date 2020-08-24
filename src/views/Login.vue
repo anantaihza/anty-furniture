@@ -34,7 +34,7 @@
               <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" v-model="password" />
-                <a href>Forgot Password ?</a>
+                <router-link to="/forgetpass">Forgot Password ?</router-link>
               </div>
               <div class="d-flex justify-content-center mt-5">
                 <button type="submit" class="btn">LOGIN</button>
