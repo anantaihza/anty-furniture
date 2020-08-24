@@ -50,7 +50,7 @@ export default {
         // this.room = response.data.data[0];
 
         this.rooms = response.data.data;
-        console.log("jasdnfsd", this.rooms);
+        console.log("Room : ", this.rooms);
       })
       .catch(e => {
         // alert(e);

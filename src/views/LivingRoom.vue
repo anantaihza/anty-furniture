@@ -7,7 +7,7 @@
         <tbody>
           <tr>
             <td>
-              <!-- <img v-bind="{ src : room.roomphotos[0].urlPhoto, alt : room.roomName }" width="100%" /> -->
+              <img v-bind="{ src : room.roomphotos[0].urlPhoto, alt : room.roomName }" width="100%" />
             </td>
             <td>
               <div class="container">

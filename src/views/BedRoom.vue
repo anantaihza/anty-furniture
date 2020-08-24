@@ -7,19 +7,19 @@
         <tbody>
           <tr>
             <td>
-              <!-- <img v-bind="{ src : room[0].roomphotos[1].urlPhoto, alt : room.roomName }" width="100%" /> -->
+              <img v-bind="{ src : room.roomphotos[1].urlPhoto, alt : room.roomName }" width="100%" />
             </td>
             <td>
               <div class="container">
                 <h1>{{ room.roomName }}</h1>
                 <p>{{ room.roomDesc }}</p>
                 <div class="row">
-                  <div >
+                  <div v-for="categ in category" :key="categ.id">
                     <div class="category text-center">
-                      <button
-                        
+                        <button
+                        @click="onCategory(categ.id)"
                         class="btn btn-light col-lg-11 col-md-11 col-sm-11 col-11"
-                      >cname</button>
+                      >{{ categ.categoryName }}</button>
                     </div>
                   </div>
                 </div>
@@ -30,138 +30,27 @@
       </table>
     </div>
 
-    <div v-if="categNow === 'sofa'" class="container" id="preference-product">
-      <div class="row text-center">
-        <div class="col-md-4 col-lg-3 col-sm-6 col-6">
-          <button type="button" class="btn">
-            <div class="card text-center">
-              <img src="@/assets/showroom/sheeva-sofa.png" class="card-img-top" alt />
-              <div class="card-body">
-                <h5>Sheeva Sofa</h5>
-                <p>Rp. 2.635.000</p>
-              </div>
-            </div>
-          </button>
+    <div class="container" id="preference-product">
+      <div class="row  text-center">
+        <div v-if="product.length == 0">
+          <h4>Data tidak ada</h4>
         </div>
-        <div class="col-md-4 col-lg-3 col-sm-6 col-6">
-          <button type="button" class="btn">
-            <div class="card text-center">
-              <img src="@/assets/showroom/appollo-sofa.png" class="card-img-top" alt />
-              <div class="card-body">
-                <h5>Appollo Sofa</h5>
-                <p>Rp. 2.980.000</p>
+        <div v-else>
+          <div class="col-md-4 col-lg-3 col-sm-6 col-6" v-for="prod in product" :key="prod.id">
+            <button type="button" class="btn">
+              <div class="card text-center">
+                <img
+                  v-bind="{ src : prod.productphotos[0].urlPhoto, alt : prod.productName }"
+                  class="card-img-top"
+                />
+                <div class="card-body">
+                  <h5>{{ prod.productName }}</h5>
+                  <price :value="prod.productPrice" />
+                </div>
               </div>
-            </div>
-          </button>
+            </button>
+          </div>
         </div>
-
-        <div class="col-md-4 col-lg-3 col-sm-6 col-6">
-          <button type="button" class="btn">
-            <div class="card text-center">
-              <img src="@/assets/showroom/alden-sofa.png" class="card-img-top" alt />
-              <div class="card-body">
-                <h5>Alden Sofa</h5>
-                <p>Rp. 3.268.000</p>
-              </div>
-            </div>
-          </button>
-        </div>
-
-        <div class="col-md-4 col-lg-3 col-sm-6 col-6">
-          <button type="button" class="btn">
-            <div class="card text-center">
-              <img src="@/assets/showroom/hemling-sofa.png" class="card-img-top" alt />
-              <div class="card-body">
-                <h5>Hemling Sofa</h5>
-                <p>Rp. 3.130.000</p>
-              </div>
-            </div>
-          </button>
-        </div>
-
-        <div class="col-md-4 col-lg-3 col-sm-6 col-6">
-          <button type="button" class="btn">
-            <div class="card text-center">
-              <img src="@/assets/showroom/luxor-sofa.png" class="card-img-top" alt />
-              <div class="card-body">
-                <h5>luxor Sofa</h5>
-                <p>Rp. 4.465.000</p>
-              </div>
-            </div>
-          </button>
-        </div>
-
-        <div class="col-md-4 col-lg-3 col-sm-6 col-6">
-          <button type="button" class="btn">
-            <div class="card text-center">
-              <img src="@/assets/showroom/vimie-sofa.png" class="card-img-top" alt />
-              <div class="card-body">
-                <h5>Vimie Sofa</h5>
-                <p>Rp. 4.690.000</p>
-              </div>
-            </div>
-          </button>
-        </div>
-
-        <div class="col-md-4 col-lg-3 col-sm-6 col-6">
-          <button type="button" class="btn">
-            <div class="card text-center">
-              <img src="@/assets/showroom/charmen-sofa.png" class="card-img-top" alt />
-              <div class="card-body">
-                <h5>Charmen Sofa</h5>
-                <p>Rp. 4.710.000</p>
-              </div>
-            </div>
-          </button>
-        </div>
-
-        <div class="col-md-4 col-lg-3 col-sm-6 col-6">
-          <button type="button" class="btn">
-            <div class="card text-center">
-              <img src="@/assets/showroom/landskoma-sofa.png" class="card-img-top" alt />
-              <div class="card-body">
-                <h5>Landskoma Sofa</h5>
-                <p>Rp. 3.268.000</p>
-              </div>
-            </div>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div v-else-if="categNow === 'lamp'" class="container" id="preference-product">
-      <div class="row text-center">
-        <p>Mipan....</p>
-      </div>
-    </div>
-
-    <div v-else-if="categNow === 'carpet'" class="container" id="preference-product">
-      <div class="row text-center">
-        <p>Zuzuzu....Zuzuzu</p>
-      </div>
-    </div>
-
-    <div v-else-if="categNow === 'chair'" class="container" id="preference-product">
-      <div class="row text-center">
-        <p>Mipan Yakakus</p>
-      </div>
-    </div>
-
-    <div v-else-if="categNow === 'table'" class="container" id="preference-product">
-      <div class="row text-center">
-        <p>Nyam Nyam Nyam..</p>
-      </div>
-    </div>
-
-    <div v-else-if="categNow === 'decoration'" class="container" id="preference-product">
-      <div class="row text-center">
-        <p>Mipaaaaaannn..... zuzuzuzuzuzuzuzu</p>
-      </div>
-    </div>
-
-    <div v-else class="container" id="preference-product">
-      <div class="row text-center">
-        <p>Mantul</p>
       </div>
     </div>
 
@@ -172,26 +61,28 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
+import Price from "@/components/Price.vue";
 import Footers from "@/components/Footers.vue";
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   name: "Bedroom",
   components: {
     Navbar,
     Subnav,
+    Price,
     Footers
   },
   data() {
     return {
-      categNow: "",
       room: [],
       category: [],
+      product: []
     };
   },
   created() {
     this.room = this.$route.params.roomId;
-    
+
     // //room
     // const options = {
     //   url: "https://rpl.abisatria.my.id/api/room/",
@@ -222,36 +113,48 @@ export default {
     //     console.log(e);
     //   });
 
-    // //category
-    // const optionsC = {
-    //   url: "https://rpl.abisatria.my.id/api/category/",
-    //   method: "get"
-    // };
+    //category
+    const optionsC = {
+      url: "https://rpl.abisatria.my.id/api/category/",
+      method: "get"
+    };
 
-    // axios(optionsC)
-    //   .then(response => {
-    //     // console.log(this.room)
-    //     let dataCategory = [];
-    //     let categories = response.data.data;
-    //     categories.map(data => {
-    //       data.rooms.map(subdata => {
-    //         if (this.room[0].id == subdata.id) {
-    //           dataCategory.push(data);
-    //           // console.log(data.categoryName)
-    //         }
-    //       });
-    //     });
-    //     console.log("categories", dataCategory);
-    //     this.category = dataCategory;
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
+    axios(optionsC)
+      .then(response => {
+        // console.log(this.room)
+        let dataCategory = [];
+        let categories = response.data.data;
+        categories.map(data => {
+          data.rooms.map(subdata => {
+            if (this.room.id == subdata.id) {
+              dataCategory.push(data);
+              // console.log(data.categoryName)
+            }
+          });
+        });
+        console.log("categories", dataCategory);
+        this.category = dataCategory;
+      })
+      .catch(e => {
+        console.log(e);
+      });
   },
   methods: {
-    cNow: function(text) {
-      this.categNow = text;
-      console.log(this.categNow);
+    onCategory: function(id) {
+      const options = {
+        url: `https://rpl.abisatria.my.id/api/product/${id}`,
+        method: "get"
+      };
+      axios(options)
+        .then(response => {
+          let ctgId = response.data.data;
+          console.log(ctgId);
+          this.product = ctgId;
+        })
+        .catch(e => {
+          // alert(e);
+          console.log(e);
+        });
     }
   }
 };
