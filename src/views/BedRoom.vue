@@ -7,19 +7,19 @@
         <tbody>
           <tr>
             <td>
-              <img v-bind="{ src : room[0].roomphotos[1].urlPhoto, alt : room.roomName }" width="100%" />
+              <!-- <img v-bind="{ src : room[0].roomphotos[1].urlPhoto, alt : room.roomName }" width="100%" /> -->
             </td>
             <td>
               <div class="container">
-                <h1>{{ room[0].roomName }}</h1>
-                <p>{{ room[0].roomDesc }}</p>
+                <h1>{{ room.roomName }}</h1>
+                <p>{{ room.roomDesc }}</p>
                 <div class="row">
-                  <div v-for="(ctg,index) in category" :key="index">
+                  <div >
                     <div class="category text-center">
                       <button
-                        @click="cNow(ctg.categoryName)"
+                        
                         class="btn btn-light col-lg-11 col-md-11 col-sm-11 col-11"
-                      >{{ ctg.categoryName }}</button>
+                      >cname</button>
                     </div>
                   </div>
                 </div>
@@ -173,10 +173,10 @@
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
 import Footers from "@/components/Footers.vue";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
-  name: "bedroom",
+  name: "Bedroom",
   components: {
     Navbar,
     Subnav,
@@ -187,65 +187,66 @@ export default {
       categNow: "",
       room: [],
       category: [],
-      idPage: 1
     };
   },
   created() {
-    //room
-    const options = {
-      url: "https://rpl.abisatria.my.id/api/room/",
-      method: "get"
-    };
+    this.room = this.$route.params.roomId;
+    
+    // //room
+    // const options = {
+    //   url: "https://rpl.abisatria.my.id/api/room/",
+    //   method: "get"
+    // };
 
-    axios(options)
-      .then(response => {
-        // this.room = response.data.data[0];
-        console.log(this.room);
-        let dataPage = [];
-        let dataRoom = response.data.data;
-        dataRoom.map(data => {
+    // axios(options)
+    //   .then(response => {
+    //     // this.room = response.data.data[0];
+    //     console.log(this.room);
+    //     let dataPage = [];
+    //     let dataRoom = response.data.data;
+    //     dataRoom.map(data => {
 
-          console.log("data id", data.id)
-          console.log("data idPage", this.idPage)
-          if (data.id == this.idPage) {
-          //    dataPage.push(data);
-          //    console.log("test",data)
-            dataPage.push(data);
-          }
-        })
-        console.log("data page",dataPage)
-        this.room = dataPage;
-      })
-      .catch(e => {
-        // alert(e);
-        console.log(e);
-      });
+    //       console.log("data id", data.id)
+    //       console.log("data idPage", this.idPage)
+    //       if (data.id == this.idPage) {
+    //       //    dataPage.push(data);
+    //       //    console.log("test",data)
+    //         dataPage.push(data);
+    //       }
+    //     })
+    //     console.log("data page",dataPage)
+    //     this.room = dataPage;
+    //   })
+    //   .catch(e => {
+    //     // alert(e);
+    //     console.log(e);
+    //   });
 
-    //category
-    const optionsC = {
-      url: "https://rpl.abisatria.my.id/api/category/",
-      method: "get"
-    };
+    // //category
+    // const optionsC = {
+    //   url: "https://rpl.abisatria.my.id/api/category/",
+    //   method: "get"
+    // };
 
-    axios(optionsC)
-      .then(response => {
-        // console.log(this.room)
-        let dataCategory = [];
-        let categories = response.data.data;
-        categories.map(data => {
-          data.rooms.map(subdata => {
-            if (this.room[0].id == subdata.id) {
-              dataCategory.push(data);
-              // console.log(data.categoryName)
-            }
-          });
-        });
-        console.log("categories", dataCategory);
-        this.category = dataCategory;
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    // axios(optionsC)
+    //   .then(response => {
+    //     // console.log(this.room)
+    //     let dataCategory = [];
+    //     let categories = response.data.data;
+    //     categories.map(data => {
+    //       data.rooms.map(subdata => {
+    //         if (this.room[0].id == subdata.id) {
+    //           dataCategory.push(data);
+    //           // console.log(data.categoryName)
+    //         }
+    //       });
+    //     });
+    //     console.log("categories", dataCategory);
+    //     this.category = dataCategory;
+    //   })
+    //   .catch(e => {
+    //     console.log(e);
+    //   });
   },
   methods: {
     cNow: function(text) {

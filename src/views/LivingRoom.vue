@@ -7,7 +7,7 @@
         <tbody>
           <tr>
             <td>
-              <img v-bind="{ src : room.roomphotos[0].urlPhoto, alt : room.roomName }" width="100%" />
+              <!-- <img v-bind="{ src : room.roomphotos[0].urlPhoto, alt : room.roomName }" width="100%" /> -->
             </td>
             <td>
               <div class="container">
@@ -194,7 +194,7 @@
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
 import Footers from "@/components/Footers.vue";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "living-room",
@@ -210,20 +210,22 @@ export default {
     };
   },
   created() {
-    const options = {
-      url: "https://rpl.abisatria.my.id/api/room/",
-      method: "get"
-    };
+     this.room = this.$route.params.roomId;
 
-    axios(options)
-      .then(response => {
-        this.room = response.data.data[1];
-        console.log(this.room);
-      })
-      .catch(e => {
-        // alert(e);
-        console.log(e);
-      });
+    // const options = {
+    //   url: "https://rpl.abisatria.my.id/api/room/",
+    //   method: "get"
+    // };
+
+    // axios(options)
+    //   .then(response => {
+    //     this.room = response.data.data[1];
+    //     console.log(this.room);
+    //   })
+    //   .catch(e => {
+    //     // alert(e);
+    //     console.log(e);
+    //   });
   },
 
   methods: {

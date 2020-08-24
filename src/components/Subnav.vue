@@ -13,13 +13,12 @@
         <span id="categories">Room</span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
         <div class="navbar-nav subnav">
-          <router-link class="nav-item btn btn-light" to="/living-room">Living Room</router-link>
-          <router-link class="nav-item btn btn-light" to="/dining-room">Dining Room</router-link>
-          <router-link class="nav-item btn btn-light" to="/kitchen">Kitchen</router-link>
-          <router-link class="nav-item btn btn-light" to="/bedroom">Bedroom</router-link>
-          <router-link class="nav-item btn btn-light" to="/bathroom">Bathroom</router-link>
-          <router-link class="nav-item btn btn-light" to="/outdoor">Outdoor</router-link>
+          <div v-for="room in rooms" :key="room.id">
+            <button @click="toDetail(room.id)" class="nav-item btn btn-light">{{ room.roomName }}</button>
+          </div>
+          
         </div>
         <div class="information">
           <a href="#">Service Information</a>
@@ -30,13 +29,72 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "subnav"
+  name: "subnav",
+  data() {
+    return {
+      rooms: []
+    };
+  },
+  created() {
+    //room
+    const options = {
+      url: "https://rpl.abisatria.my.id/api/room/",
+      method: "get"
+    };
+
+    axios(options)
+      .then(response => {
+        // this.room = response.data.data[0];
+
+        this.rooms = response.data.data;
+        console.log("jasdnfsd", this.rooms);
+      })
+      .catch(e => {
+        // alert(e);
+        console.log(e);
+      });
+  },
+  methods: {
+    toDetail: function (id) {
+      const options = {
+        url: `https://rpl.abisatria.my.id/api/room/${id}`,
+        method: 'get'
+      };
+      axios(options)
+        .then(response => {
+          console.log('data room :',response.data.data);
+          let roomId = response.data.data;
+
+          if (id == 1) {
+            this.$router.push({
+                name: "Bedroom",
+                params: {
+                  roomId: roomId
+                }
+            });
+          } else if (id == 6) {
+            this.$router.push({
+                name: "LivingRoom",
+                params: {
+                  roomId: roomId
+                }
+            });
+          }
+          
+        })
+        .catch(e => {
+          // alert(e);
+          console.log(e);
+        });
+    }
+  }
 };
 </script>
 
 <style scoped>
-
 .nav-sub {
   background-color: #ffffff;
   box-shadow: 0 1px 10px 0 grey;

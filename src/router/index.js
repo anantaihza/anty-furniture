@@ -5,7 +5,7 @@ import Login from "../views/Login.vue";
 import Profile from "../views/Profile.vue";
 import Landing from "../views/Landing.vue";
 import Product from "../views/Product.vue";
-import BedRoom from "../views/BedRoom.vue";
+import Bedroom from "../views/Bedroom.vue";
 import Kitchen from "../views/Kitchen.vue";
 import Outdoor from "../views/Outdoor.vue";
 import Register from "../views/Register.vue";
@@ -78,8 +78,8 @@ const routes = [
   },
   {
     path:"/bedroom",
-    name: "BedRoom",
-    component: BedRoom
+    name: "Bedroom",
+    component: Bedroom
   },
   {
     path:"/kitchen",
