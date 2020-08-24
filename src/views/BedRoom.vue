@@ -35,7 +35,7 @@
         <div v-if="product.length == 0">
           <h4>Data tidak ada</h4>
         </div>
-        <div v-else>
+        
           <div class="col-md-4 col-lg-3 col-sm-6 col-6" v-for="prod in product" :key="prod.id">
             <button type="button" class="btn">
               <div class="card text-center">
@@ -49,7 +49,7 @@
                 </div>
               </div>
             </button>
-          </div>
+      
         </div>
       </div>
     </div>
@@ -83,35 +83,7 @@ export default {
   created() {
     this.room = this.$route.params.roomId;
 
-    // //room
-    // const options = {
-    //   url: "https://rpl.abisatria.my.id/api/room/",
-    //   method: "get"
-    // };
-
-    // axios(options)
-    //   .then(response => {
-    //     // this.room = response.data.data[0];
-    //     console.log(this.room);
-    //     let dataPage = [];
-    //     let dataRoom = response.data.data;
-    //     dataRoom.map(data => {
-
-    //       console.log("data id", data.id)
-    //       console.log("data idPage", this.idPage)
-    //       if (data.id == this.idPage) {
-    //       //    dataPage.push(data);
-    //       //    console.log("test",data)
-    //         dataPage.push(data);
-    //       }
-    //     })
-    //     console.log("data page",dataPage)
-    //     this.room = dataPage;
-    //   })
-    //   .catch(e => {
-    //     // alert(e);
-    //     console.log(e);
-    //   });
+ 
 
     //category
     const optionsC = {

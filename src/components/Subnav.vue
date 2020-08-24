@@ -47,8 +47,7 @@ export default {
 
     axios(options)
       .then(response => {
-        // this.room = response.data.data[0];
-
+        
         this.rooms = response.data.data;
         console.log("Room : ", this.rooms);
       })
