@@ -21,8 +21,6 @@
           <h2 class="my-4">New Item</h2>
           <div class="row text-center py-3">
             <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="item in newItem" :key="item.id">
-
-
               <router-link :to="{ name: 'Product', params: { id: item.id } }" class="btn prod">
                 <div class="card">
                   <div class="card-body">
@@ -32,8 +30,6 @@
                   </div>
                 </div>
               </router-link>
-
-
             </div>
           </div>
         </div>

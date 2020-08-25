@@ -56,20 +56,44 @@
     </div>
     <hr />
     <div class="container py-4">
-      <h3>Similar Items</h3>
-      <div class="d-flex similar scrollbar">
-        <div v-for="item in simProd" :key="item.id">
-          <button type="button" class="btn">
-            <div class="card text-center">
-              <img v-bind="{ src : item.productphotos[0].urlPhoto }" class="card-img-top" />
-              <div class="card-body">
-                <h5>{{ item.productName }}</h5>
-                <p>
-                  <price :value="item.productPrice" />
-                </p>
+      <div v-if="!simProd.length == 0">
+        <h3>Similar Items</h3>
+        <div class="d-flex similar scrollbar">
+          <div v-for="item in simProd" :key="item.id">
+            <router-link
+              :to="{ name: 'Product', params: { id: item.id } }"
+              type="button"
+              class="btn"
+            >
+              <div class="card text-center">
+                <img v-bind="{ src : item.productphotos[0].urlPhoto }" class="card-img-top" />
+                <div class="card-body">
+                  <h5>{{ item.productName }}</h5>
+                  <p>
+                    <price :value="item.productPrice" />
+                  </p>
+                </div>
               </div>
-            </div>
-          </button>
+            </router-link>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <h3>Recommendation</h3>
+        <div class="d-flex similar scrollbar">
+          <div v-for="item in recommendation" :key="item.id">
+            <router-link :to="{ name: 'Product', params: { id: item.id } }" class="btn">
+              <div class="card text-center">
+                <img v-bind="{ src : item.productphotos[0].urlPhoto }" class="card-img-top" />
+                <div class="card-body">
+                  <h5>{{ item.productName }}</h5>
+                  <p>
+                    <price :value="item.productPrice" />
+                  </p>
+                </div>
+              </div>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -97,12 +121,14 @@ export default {
       qty: 1,
       prodDetail: [],
       simProd: [],
+      recommendation: [],
       idProd: this.$route.params.id
     };
   },
   created() {
     this.getDataProduct();
     this.getSimilar();
+    this.getRecommendation();
   },
   methods: {
     qtyValue: function(params) {
@@ -137,7 +163,28 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+    getRecommendation() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/search/recommendation/product",
+        method: "get"
+      };
+
+      axios(options)
+        .then(response => {
+          this.recommendation = response.data.data;
+          console.log("rec", this.recommendation);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.getDataProduct();
+    this.getSimilar();
+    this.getRecommendation();
   }
 };
 </script>

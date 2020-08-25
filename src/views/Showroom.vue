@@ -16,8 +16,8 @@
                 <div class="row">
                   <div v-for="categ in category" :key="categ.id">
                     <div class="category text-center">
-                        <button
-                        @click="onCategory(categ.id)"
+                      <button
+                        @click="getProduct(categ.id)"
                         class="btn btn-light col-lg-11 col-md-11 col-sm-11 col-11"
                       >{{ categ.categoryName }}</button>
                     </div>
@@ -31,25 +31,53 @@
     </div>
 
     <div class="container" id="preference-product">
-      <div class="row  text-center">
-        <div v-if="product.length == 0">
-          <h4>Data tidak ada</h4>
+      <div v-if="ctgClick == false" class="row text-center">
+        <div class="container mb-4">
+          <h3>All Product</h3>
         </div>
-        
-          <div class="col-md-4 col-lg-3 col-sm-6 col-6" v-for="prod in product" :key="prod.id">
-            <button type="button" class="btn">
-              <div class="card text-center">
-                <img
-                  v-bind="{ src : prod.productphotos[0].urlPhoto, alt : prod.productName }"
-                  class="card-img-top"
-                />
-                <div class="card-body">
-                  <h5>{{ prod.productName }}</h5>
-                  <price :value="prod.productPrice" />
-                </div>
+        <div class="col-md-4 col-lg-3 col-sm-6 col-6" v-for="prod in recommendation" :key="prod.id">
+          <router-link :to="{ name: 'Product', params: { id: prod.id } }" class="btn">
+            <div class="card text-center">
+              <img
+                v-bind="{ src : prod.productphotos[0].urlPhoto, alt : prod.productName }"
+                class="card-img-top"
+              />
+              <div class="card-body">
+                <h5>{{ prod.productName }}</h5>
+                <price :value="prod.productPrice" />
               </div>
-            </button>
+            </div>
+          </router-link>
+        </div>
+      </div>
+
+
+      <div v-else-if="product.length == 0 || category.length == 0">
+        <div class="jumbotron jumbotron-fluid bg-white">
+          <div class="container text-center">
+            <br />
+            <h2 class="text-muted">Product Not Found</h2>
+            <br />
+          </div>
+        </div>
+      </div>
+
       
+
+      <div v-else class="row text-center">
+        <div class="col-md-4 col-lg-3 col-sm-6 col-6" v-for="prod in product" :key="prod.id">
+          <router-link :to="{ name: 'Product', params: { id: prod.id } }" class="btn">
+            <div class="card text-center">
+              <img
+                v-bind="{ src : prod.productphotos[0].urlPhoto, alt : prod.productName }"
+                class="card-img-top"
+              />
+              <div class="card-body">
+                <h5>{{ prod.productName }}</h5>
+                <price :value="prod.productPrice" />
+              </div>
+            </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -77,38 +105,57 @@ export default {
     return {
       room: [],
       category: [],
-      product: []
+      product: [],
+      ctgClick: false,
+      recommendation: []
     };
   },
-  mounted() {
-    
-  },
   created() {
-    this.getRoom()
-
-
-   
+    this.getRoom();
+    this.getCategory();
+    this.getRecommendation();
   },
   methods: {
     getRoom() {
       const options = {
         url: `https://rpl.abisatria.my.id/api/room/${this.$route.params.id}`,
-        method: 'get'
+        method: "get"
       };
       axios(options)
         .then(response => {
-          console.log('data room :',response.data.data);
+          console.log("data room :", response.data.data);
           let roomId = response.data.data;
-
-          this.room = roomId
-          
+          this.room = roomId;
         })
         .catch(e => {
           // alert(e);
           console.log(e);
         });
     },
-    onCategory: function(id) {
+    getCategory() {
+      const optionsC = {
+        url: "https://rpl.abisatria.my.id/api/category/",
+        method: "get"
+      };
+      axios(optionsC)
+        .then(response => {
+          let dataCategory = [];
+          let categories = response.data.data;
+          categories.map(data => {
+            data.rooms.map(subdata => {
+              if (this.$route.params.id == subdata.id) {
+                dataCategory.push(data);
+              }
+            });
+          });
+          console.log("categories id: ", dataCategory.id);
+          this.category = dataCategory;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getProduct: function(id) {
       const options = {
         url: `https://rpl.abisatria.my.id/api/product/${id}`,
         method: "get"
@@ -118,42 +165,34 @@ export default {
           let ctgId = response.data.data;
           console.log(ctgId);
           this.product = ctgId;
+          this.ctgClick = true
         })
         .catch(e => {
           // alert(e);
+          console.log(e);
+        });
+    },
+    getRecommendation() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/search/recommendation/product",
+        method: "get"
+      };
+
+      axios(options)
+        .then(response => {
+          this.recommendation = response.data.data;
+          console.log("rec", this.recommendation);
+        })
+        .catch(e => {
           console.log(e);
         });
     }
   },
   beforeRouteUpdate(to, from, next) {
     next();
-    this.getRoom()
-    const optionsC = {
-      url: "https://rpl.abisatria.my.id/api/category/",
-      method: "get"
-    };
-
-    axios(optionsC)
-      .then(response => {
-        // console.log(this.room)
-        let dataCategory = [];
-        let categories = response.data.data;
-        categories.map(data => {
-          data.rooms.map(subdata => {
-            if (this.room.id == subdata.id) {
-              dataCategory.push(data);
-              // console.log(data.categoryName)
-            }
-          });
-        });
-        console.log("categories", dataCategory);
-        this.category = dataCategory;
-      })
-      .catch(e => {
-        console.log(e);
-      });
-
-    
+    this.getRoom();
+    this.getCategory();
+    this.getRecommendation()
   }
 };
 </script>
