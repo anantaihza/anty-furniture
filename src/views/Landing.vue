@@ -17,20 +17,45 @@
         </div>
       </div>
       <div class="container" id="new-items">
-        <h2 class="my-4">New Item</h2>
-        <div class="row text-center py-3">
-          <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="item in newItem" :key="item.id">
-            <button type="button" class="btn prod">
-              <div class="card">
-                <div class="card-body">
-                  <img v-bind="{ src : item.productphotos[0].urlPhoto, alt : item.productName }" />
-                  <h4 class="pt-3">{{ item.productName }}</h4>
-                  <price :value="item.productPrice" />
-                </div>
-              </div>
-            </button>
-          </div>
+        <div v-if="!newItem.length == 0">
+          <h2 class="my-4">New Item</h2>
+          <div class="row text-center py-3">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="item in newItem" :key="item.id">
 
+
+              <router-link :to="{ name: 'Product', params: { id: item.id } }" class="btn prod">
+                <div class="card">
+                  <div class="card-body">
+                    <img v-bind="{ src : item.productphotos[0].urlPhoto, alt : item.productName }" />
+                    <h4 class="pt-3">{{ item.productName }}</h4>
+                    <price :value="item.productPrice" />
+                  </div>
+                </div>
+              </router-link>
+
+
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <h2 class="my-4">Recommendation</h2>
+          <div class="row text-center py-3">
+            <div
+              class="col-lg-3 col-md-4 col-sm-6 col-6"
+              v-for="item in recommendation"
+              :key="item.id"
+            >
+              <router-link :to="{ name: 'Product', params: { id: item.id } }" class="btn prod">
+                <div class="card">
+                  <div class="card-body">
+                    <img v-bind="{ src : item.productphotos[0].urlPhoto, alt : item.productName }" />
+                    <h4 class="pt-3">{{ item.productName }}</h4>
+                    <price :value="item.productPrice" />
+                  </div>
+                </div>
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
       <footers></footers>
@@ -56,31 +81,51 @@ export default {
   data() {
     return {
       token: "",
-      newItem: []
-    }
+      newItem: [],
+      recommendation: []
+    };
   },
   created() {
-    const token = localStorage.getItem('access_token');
+    const token = localStorage.getItem("access_token");
     if (token) {
       this.token = token;
-      console.log("mengakses dengan token")
+      console.log("mengakses dengan token");
     }
 
-    //new Item
-    const options = {
-      url: "https://rpl.abisatria.my.id/api/search/newItems/product",
-      method: "get"
-    };
+    this.getNewItem();
+    this.getRecommendation();
+  },
+  methods: {
+    getNewItem() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/search/newItems/product",
+        method: "get"
+      };
 
-    axios(options)
-      .then(response => {
-        this.newItem = response.data.data;
-        console.log(this.newItem)
+      axios(options)
+        .then(response => {
+          this.newItem = response.data.data;
+          console.log(this.newItem);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getRecommendation() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/search/recommendation/product",
+        method: "get"
+      };
 
-      })
-      .catch(e => {
-        console.log(e);
-      });
+      axios(options)
+        .then(response => {
+          this.recommendation = response.data.data;
+          console.log("rec", this.recommendation);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   }
 };
 </script>

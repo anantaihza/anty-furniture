@@ -62,7 +62,7 @@ const routes = [
     component: PaymentPesanan
   },
   {
-    path:"/product",
+    path:"/product/:id",
     name: "Product",
     component: Product
   },
