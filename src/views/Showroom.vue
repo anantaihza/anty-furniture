@@ -86,31 +86,8 @@ export default {
   created() {
     this.getRoom()
 
-    //category
-    const optionsC = {
-      url: "https://rpl.abisatria.my.id/api/category/",
-      method: "get"
-    };
 
-    axios(optionsC)
-      .then(response => {
-        // console.log(this.room)
-        let dataCategory = [];
-        let categories = response.data.data;
-        categories.map(data => {
-          data.rooms.map(subdata => {
-            if (this.room.id == subdata.id) {
-              dataCategory.push(data);
-              // console.log(data.categoryName)
-            }
-          });
-        });
-        console.log("categories", dataCategory);
-        this.category = dataCategory;
-      })
-      .catch(e => {
-        console.log(e);
-      });
+   
   },
   methods: {
     getRoom() {
@@ -148,6 +125,36 @@ export default {
         });
     }
   },
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.getRoom()
+    const optionsC = {
+      url: "https://rpl.abisatria.my.id/api/category/",
+      method: "get"
+    };
+
+    axios(optionsC)
+      .then(response => {
+        // console.log(this.room)
+        let dataCategory = [];
+        let categories = response.data.data;
+        categories.map(data => {
+          data.rooms.map(subdata => {
+            if (this.room.id == subdata.id) {
+              dataCategory.push(data);
+              // console.log(data.categoryName)
+            }
+          });
+        });
+        console.log("categories", dataCategory);
+        this.category = dataCategory;
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
+    
+  }
 };
 </script>
 
