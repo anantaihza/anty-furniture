@@ -7,7 +7,7 @@
         <tbody>
           <tr>
             <td>
-              <img v-bind="{ src : room.roomphotos[1].urlPhoto, alt : room.roomName }" width="100%" />
+              <img v-bind="{ src : room.roomphotos[0].urlPhoto, alt : room.roomName }" width="100%" />
             </td>
             <td>
               <div class="container">
@@ -66,7 +66,7 @@ import Footers from "@/components/Footers.vue";
 import axios from "axios";
 
 export default {
-  name: "Bedroom",
+  name: "Showroom",
   components: {
     Navbar,
     Subnav,
@@ -80,10 +80,11 @@ export default {
       product: []
     };
   },
+  mounted() {
+    
+  },
   created() {
-    this.room = this.$route.params.roomId;
-
- 
+    this.getRoom()
 
     //category
     const optionsC = {
@@ -112,6 +113,24 @@ export default {
       });
   },
   methods: {
+    getRoom() {
+      const options = {
+        url: `https://rpl.abisatria.my.id/api/room/${this.$route.params.id}`,
+        method: 'get'
+      };
+      axios(options)
+        .then(response => {
+          console.log('data room :',response.data.data);
+          let roomId = response.data.data;
+
+          this.room = roomId
+          
+        })
+        .catch(e => {
+          // alert(e);
+          console.log(e);
+        });
+    },
     onCategory: function(id) {
       const options = {
         url: `https://rpl.abisatria.my.id/api/product/${id}`,
@@ -128,7 +147,7 @@ export default {
           console.log(e);
         });
     }
-  }
+  },
 };
 </script>
 

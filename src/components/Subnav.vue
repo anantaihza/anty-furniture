@@ -13,12 +13,13 @@
         <span id="categories">Room</span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
         <div class="navbar-nav subnav">
           <div v-for="room in rooms" :key="room.id">
-            <button @click="toDetail(room.id)" class="nav-item btn btn-light">{{ room.roomName }}</button>
+            <router-link
+              :to="{ name: 'Showroom', params: { id: room.id } }"
+              class="nav-item btn btn-light"
+            >{{ room.roomName }}</router-link>
           </div>
-          
         </div>
         <div class="information">
           <a href="#">Service Information</a>
@@ -39,50 +40,19 @@ export default {
     };
   },
   created() {
-    //room
-    const options = {
-      url: "https://rpl.abisatria.my.id/api/room/",
-      method: "get"
-    };
-
-    axios(options)
-      .then(response => {
-        
-        this.rooms = response.data.data;
-        console.log("Room : ", this.rooms);
-      })
-      .catch(e => {
-        // alert(e);
-        console.log(e);
-      });
+    this.getAllRoom();
   },
   methods: {
-    toDetail: function (id) {
+    getAllRoom() {
       const options = {
-        url: `https://rpl.abisatria.my.id/api/room/${id}`,
-        method: 'get'
+        url: "https://rpl.abisatria.my.id/api/room/",
+        method: "get"
       };
+
       axios(options)
         .then(response => {
-          console.log('data room :',response.data.data);
-          let roomId = response.data.data;
-
-          if (id == 1) {
-            this.$router.push({
-                name: "Bedroom",
-                params: {
-                  roomId: roomId
-                }
-            });
-          } else if (id == 6) {
-            this.$router.push({
-                name: "LivingRoom",
-                params: {
-                  roomId: roomId
-                }
-            });
-          }
-          
+          this.rooms = response.data.data;
+          console.log("Room : ", this.rooms);
         })
         .catch(e => {
           // alert(e);

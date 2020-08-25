@@ -5,7 +5,7 @@ import Login from "../views/Login.vue";
 import Profile from "../views/Profile.vue";
 import Landing from "../views/Landing.vue";
 import Product from "../views/Product.vue";
-import Bedroom from "../views/Bedroom.vue";
+import Showroom from "../views/Showroom.vue";
 import Kitchen from "../views/Kitchen.vue";
 import Outdoor from "../views/Outdoor.vue";
 import Register from "../views/Register.vue";
@@ -77,9 +77,9 @@ const routes = [
     component: DiningRoom
   },
   {
-    path:"/bedroom",
-    name: "Bedroom",
-    component: Bedroom
+    path:"/showroom/:id",
+    name: "Showroom",
+    component: Showroom
   },
   {
     path:"/kitchen",
