@@ -7,7 +7,7 @@
           <font-awesome-icon :icon="['fas', 'user-circle']" />
         </div>
         <div class="col-md-9 my-auto">
-          <h1>User1510</h1>
+          <h1>{{ dataProfile.name }}</h1>
           <div class="col-3 pl-0">
             <!-- <button type="button" class="btn btn-warning btn-sm btn-block">Edit Profile</button> -->
             <!-- Button trigger modal -->
@@ -45,34 +45,26 @@
                     <div class="container mt-4 pt-3">
                       <form class="container customer-info px-auto">
                         <div class="form-group row">
-                          <label for="form-name" class="col-sm-3 col-form-label">Name*</label>
+                          <label for="form-name" class="col-sm-3 col-form-label">Name</label>
                           <div class="col-sm-9">
-                            <input
-                              type="text"
-                              class="form-control border-0"
-                              id="form-name"
-                              placeholder
-                            />
+                            <input type="text" class="form-control border-0" id="form-name" v-model="dataProfile.name"/>
                           </div>
                         </div>
 
                         <div class="form-group row">
-                          <label
-                            for="form-phoneNumber"
-                            class="col-sm-3 col-form-label"
-                          >Phone Number*</label>
+                          <label for="form-phoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
                           <div class="col-sm-9 phoneNumber">
                             <input
                               type="number"
                               class="form-control border-0"
                               id="form-phoneNumber"
-                              placeholder
+                              v-model="dataProfile.phone"
                             />
                           </div>
                         </div>
 
                         <div class="pt-4 pb-4 mx-auto text-right">
-                          <button class="btn btn-warning">Save</button>
+                          <button @click="updateProfile" class="btn btn-warning">Save</button>
                         </div>
                       </form>
                     </div>
@@ -116,7 +108,7 @@
                           class="btn btn-warning btn-lg btn-block"
                           data-toggle="modal"
                           data-target="#exampleModal"
-                        >Reset Email</button>
+                        >Change Email</button>
 
                         <!-- Modal reset Email-->
                         <div
@@ -138,7 +130,7 @@
                                 >
                                   <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h5 class="modal-title" id="exampleModalLabel">Reset Email</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Change Email</h5>
                                 <div class="container mt-4 pt-3">
                                   <form class="container customer-info px-auto">
                                     <div class="form-group row">
@@ -148,6 +140,8 @@
                                           type="email"
                                           class="form-control border-0"
                                           id="form-email"
+                                          v-model="dataProfile.email"
+                                          readonly
                                         />
                                       </div>
                                     </div>
@@ -162,12 +156,13 @@
                                           type="email"
                                           class="form-control border-0"
                                           id="form-newEmail"
+                                          v-model="dataProfile.email"
                                         />
                                       </div>
                                     </div>
 
                                     <div class="pt-4 pb-4 mx-auto text-right">
-                                      <button class="btn btn-warning">Save</button>
+                                      <button @click="updateEmail" class="btn btn-warning">Save</button>
                                     </div>
                                   </form>
                                 </div>
@@ -184,7 +179,7 @@
                           class="btn btn-warning btn-lg btn-block"
                           data-toggle="modal"
                           data-target="#resPassword"
-                        >Reset Password</button>
+                        >Change Password</button>
 
                         <!-- Modal reset password-->
                         <div
@@ -206,14 +201,14 @@
                                 >
                                   <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
                                 <div class="container mt-4 pt-3">
                                   <form class="container customer-info px-auto">
                                     <div class="form-group row">
                                       <label
                                         for="form-password"
                                         class="col-sm-3 col-form-label"
-                                      >Password</label>
+                                      >Old Password</label>
                                       <div class="col-sm-9">
                                         <input
                                           type="Password"
@@ -361,6 +356,7 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Price from "@/components/Price.vue";
+import axios from "axios";
 
 export default {
   name: "profile",
@@ -370,7 +366,8 @@ export default {
   },
   data() {
     return {
-      token: ""
+      token: "",
+      dataProfile: []
     };
   },
   created() {
@@ -379,6 +376,7 @@ export default {
       this.token = token;
       console.log("mengakses dengan token");
     }
+    this.getProfile();
   },
   methods: {
     logout: function() {
@@ -387,6 +385,70 @@ export default {
       this.$router.push({
         name: "Landing"
       });
+    },
+    updateProfile: function() {
+      let name = this.dataProfile.name;
+      let phone = this.dataProfile.phone
+      const options = {
+        url: `https://rpl.abisatria.my.id/api/customer/profile`,
+        method: "patch",
+        data: {
+          name,
+          phone
+        },
+        headers: {
+          authorization: this.token
+        }
+      };
+
+      axios(options)
+        .then(response => {
+          this.getProfile();
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e.response);
+        });
+    },
+    updateEmail: function() {
+      let email = this.dataProfile.email;
+      const options = {
+        url: `https://rpl.abisatria.my.id/api/customer/profile/email`,
+        method: "patch",
+        data: {
+          email
+        },
+        headers: {
+          authorization: this.token
+        }
+      };
+
+      axios(options)
+        .then(response => {
+          this.getProfile();
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e.response);
+        });
+    },
+    getProfile() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/customer/profile",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+
+      axios(options)
+        .then(response => {
+          this.dataProfile = response.data.data;
+          console.log(this.dataProfile);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };

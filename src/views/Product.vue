@@ -43,7 +43,7 @@
           <br />
           <h5>Description</h5>
           <p>{{ prodDetail.productDesc }}</p>
-          <p>Weight : {{ prodDetail.productWeight }}</p>
+          <p>Weight : {{ prodDetail.productWeight }} Kg</p>
           <p>Stok : {{ prodDetail.productStock }}</p>
         </div>
         <div class="col-lg-3 col-md-3 m-auto pt-4 text-center">
