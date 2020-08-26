@@ -35,21 +35,26 @@
           </div>
         </div>
         <div class="col-lg-5 col-md-7 pt-2">
-          <h3>{{ prodDetail.productName }}</h3>
+          <h2>{{ prodDetail.productName }}</h2>
           <h4>
             <price :value="prodDetail.productPrice" />
           </h4>
           <br />
           <br />
-          <h6>Description</h6>
+          <h5>Description</h5>
           <p>{{ prodDetail.productDesc }}</p>
+          <p>Weight : {{ prodDetail.productWeight }}</p>
           <p>Stok : {{ prodDetail.productStock }}</p>
         </div>
         <div class="col-lg-3 col-md-3 m-auto pt-4 text-center">
           <quantity @child-qty="qtyValue" />
           <div class="col-12 mt-4 text-center">
-            <button type="button" class="btn buy btn-sm btn-block">BUY</button>
-            <button @click="addToCart" type="button" class="btn basket btn-sm btn-block">Add to Basket</button>
+            <button @click="buyNow" type="button" class="btn buy btn-sm btn-block">BUY</button>
+            <button
+              @click="addToCart"
+              type="button"
+              class="btn basket btn-sm btn-block"
+            >Add to Basket</button>
           </div>
         </div>
       </div>
@@ -156,11 +161,9 @@ export default {
     qtyValue: function(params) {
       this.qty = params;
     },
-    buyNow: function() {},
-    addToCart: function() {
+    buyNow: function() {
       if (this.token) {
-
-        let token = this.token
+        let token = this.token;
         let productId = this.idProduct;
         let quantity = this.qty;
         const options = {
@@ -171,14 +174,16 @@ export default {
             quantity
           },
           headers: {
-            'authorization' : token
+            authorization: token
           }
         };
         axios(options)
           .then(response => {
             console.log(response.data.data);
-
-
+            this.$router.push({
+              name: "Cart"
+            });
+            alert("Berhasil Dimasukan ke Cart");
           })
           .catch(e => {
             console.log(e);
@@ -189,7 +194,36 @@ export default {
         });
       }
     },
-
+    addToCart: function() {
+      if (this.token) {
+        let token = this.token;
+        let productId = this.idProduct;
+        let quantity = this.qty;
+        const options = {
+          url: "https://rpl.abisatria.my.id/api/core/cart",
+          method: "post",
+          data: {
+            productId,
+            quantity
+          },
+          headers: {
+            authorization: token
+          }
+        };
+        axios(options)
+          .then(response => {
+            console.log(response.data.data);
+            alert("Berhasil Dimasukan ke Cart");
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      } else {
+        this.$router.push({
+          name: "Login"
+        });
+      }
+    },
     getDataProduct() {
       const options = {
         url: `https://rpl.abisatria.my.id/api/product/detail/${this.$route.params.id}`,

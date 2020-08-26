@@ -7,8 +7,14 @@
         <div class="row">
           <div class="col-md-12 text-center">
             <h1>Your Basket</h1>
-            <p>{{ qtyTotal }} Items | <price :value="priceTotal" /></p>
-            <router-link type="button" class="btn payment" to="/infoPesanan">Payment</router-link>
+            <p>
+              {{ qtyTotal }} Items |
+              <price :value="priceTotal" />
+            </p>
+            <div v-if="!cart.length == 0">
+              <router-link type="button" class="btn payment" to="/infoPesanan">Payment</router-link>
+            </div>
+
           </div>
         </div>
       </div>
@@ -31,7 +37,7 @@
               <td>
                 <div class="row">
                   <div class="col-md-3">
-                    <img src="@/assets/cart/Antique-lamp.png" alt />
+                    <img v-bind="{ src : item.product.productphotos[0].urlPhoto }" width="70%" />
                   </div>
                   <div class="col-md-6 ml-4 my-auto">
                     <h4>
@@ -46,7 +52,7 @@
               </td>
               <td>
                 <div class="btn-group btn-group-sm spinner" role="group" aria-label="spinnerNumber">
-                  <button type="button" class="btn" @click="delQty">-</button>
+                  <button type="button" class="btn" @click="delQty(item.id, index)">-</button>
 
                   <div class="num-spin">
                     <input
@@ -59,10 +65,12 @@
                     />
                   </div>
 
-                  <button type="button" class="btn" @click="addQty">+</button>
+                  <button type="button" class="btn" @click="addQty(item.id, index)">+</button>
                 </div>
               </td>
-              <td><price :value="item.product.productPrice * item.quantity" /></td>
+              <td>
+                <price :value="item.product.productPrice * item.quantity" />
+              </td>
               <td>
                 <button @click="delCart(item.id)" class="btn btnRemove">
                   <font-awesome-icon :icon="['fas', 'trash']" />
@@ -115,7 +123,8 @@ export default {
     priceTotal: function() {
       let sum = 0;
       for (let key in this.cart) {
-        sum = sum + this.cart[key].product.productPrice * this.cart[key].quantity;
+        sum =
+          sum + this.cart[key].product.productPrice * this.cart[key].quantity;
       }
       return sum;
     }
@@ -124,14 +133,69 @@ export default {
     qtyValue: function(params) {
       this.qty = params;
     },
-    addQty: function() {
-      this.qty++;
+    addQty: function(idCart, idx) {
+      let quantity = this.cart[idx].quantity + 1;
+      const options = {
+        url: `https://rpl.abisatria.my.id/api/core/cart/${idCart}`,
+        method: "patch",
+        data: {
+          quantity
+        },
+        headers: {
+          authorization: this.token
+        }
+      };
+
+      axios(options)
+        .then(response => {
+          this.getCart();
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e.response);
+        });
     },
-    delQty: function() {
-      if (this.qty == 1) {
-        this.qty = 1;
+    delQty: function(idCart, idx) {
+      if (this.cart[idx].quantity == 1) {
+        const options = {
+          url: `https://rpl.abisatria.my.id/api/core/cart/${idCart}`,
+          method: "delete",
+          headers: {
+            authorization: this.token
+          }
+        };
+
+        axios(options)
+          .then(response => {
+            let check = response.data;
+            this.getCart();
+            this.cart.splice(idCart, 1);
+            console.log(check);
+          })
+          .catch(e => {
+            console.log(e);
+          });
       } else {
-        this.qty--;
+        let quantity = this.cart[idx].quantity - 1;
+        const options = {
+          url: `https://rpl.abisatria.my.id/api/core/cart/${idCart}`,
+          method: "patch",
+          data: {
+            quantity
+          },
+          headers: {
+            authorization: this.token
+          }
+        };
+
+        axios(options)
+          .then(response => {
+            this.getCart();
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
       }
     },
     getCart() {
@@ -139,7 +203,7 @@ export default {
         url: "https://rpl.abisatria.my.id/api/core/cart",
         method: "get",
         headers: {
-          'authorization': this.token
+          authorization: this.token
         }
       };
 
@@ -157,7 +221,7 @@ export default {
         url: `https://rpl.abisatria.my.id/api/core/cart/${id}`,
         method: "delete",
         headers: {
-          'authorization': this.token
+          authorization: this.token
         }
       };
 
@@ -165,7 +229,7 @@ export default {
         .then(response => {
           let check = response.data;
           this.getCart();
-          this.cart.splice(id, 1)
+          this.cart.splice(id, 1);
           console.log(check);
         })
         .catch(e => {
