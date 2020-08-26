@@ -77,6 +77,24 @@
             </router-link>
           </div>
         </div>
+        <h3>Recommendation</h3>
+        <div class="d-flex similar scrollbar">
+          <div v-for="item in recommendation" :key="item.id">
+            <router-link :to="{ name: 'Product', params: { id: item.id } }" class="btn">
+              <div class="card text-center">
+                <img v-bind="{ src : item.productphotos[0].urlPhoto }" class="card-img-top" />
+                <div class="card-body">
+                  <h5>{{ item.productName }}</h5>
+                  <p>
+                    <price :value="item.productPrice" />
+                  </p>
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+
+
       </div>
       <div v-else>
         <h3>Recommendation</h3>

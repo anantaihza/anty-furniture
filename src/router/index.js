@@ -2,20 +2,15 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Cart from "../views/Cart.vue";
 import Login from "../views/Login.vue";
-import Profile from "../views/Profile.vue";
 import Landing from "../views/Landing.vue";
 import Product from "../views/Product.vue";
+import Profile from "../views/Profile.vue";
 import Showroom from "../views/Showroom.vue";
-import Kitchen from "../views/Kitchen.vue";
-import Outdoor from "../views/Outdoor.vue";
 import Register from "../views/Register.vue";
-import Bathroom from "../views/Bathroom.vue";
-import DiningRoom from "../views/DiningRoom.vue";
-import LivingRoom from "../views/LivingRoom.vue";
+import ForgetPass from "../views/ForgetPass.vue";
 import InfoPesanan from "../views/InfoPesanan.vue";
 import ReviewPesanan from "../views/ReviewPesanan.vue";
 import PaymentPesanan from "../views/PaymentPesanan.vue";
-import ForgetPass from "../views/ForgetPass.vue";
 import ConfirmForgetPass from "../views/ConfirmForgetPass.vue";
 
 Vue.use(VueRouter);
@@ -27,82 +22,57 @@ const routes = [
     component: Landing
   },
   {
-    path:"/cart",
+    path: "/cart",
     name: "Cart",
     component: Cart
   },
   {
-    path:"/profile",
+    path: "/profile",
     name: "Profile",
     component: Profile
   },
   {
-    path:"/login",
+    path: "/login",
     name: "Login",
     component: Login
   },
   {
-    path:"/register",
+    path: "/register",
     name: "Register",
     component: Register
   },
   {
-    path:"/infoPesanan",
+    path: "/infoPesanan",
     name: "InfoPesanan",
     component: InfoPesanan
   },
   {
-    path:"/reviewPesanan",
+    path: "/reviewPesanan",
     name: "ReviewPesanan",
     component: ReviewPesanan
   },
   {
-    path:"/paymentPesanan",
+    path: "/paymentPesanan",
     name: "PaymentPesanan",
     component: PaymentPesanan
   },
   {
-    path:"/product/:id",
+    path: "/product/:id",
     name: "Product",
     component: Product
   },
   {
-    path:"/living-room",
-    name: "LivingRoom",
-    component: LivingRoom
-  },
-  {
-    path:"/dining-room",
-    name: "DiningRoom",
-    component: DiningRoom
-  },
-  {
-    path:"/showroom/:id",
+    path: "/showroom/:id",
     name: "Showroom",
     component: Showroom
   },
   {
-    path:"/kitchen",
-    name: "Kitchen",
-    component: Kitchen
-  },
-  {
-    path:"/bathroom",
-    name: "Bathroom",
-    component: Bathroom
-  },
-  {
-    path:"/outdoor",
-    name: "Outdoor",
-    component: Outdoor
-  },
-  {
-    path:"/forgetpass",
+    path: "/forgetpass",
     name: "ForgetPass",
     component: ForgetPass
   },
   {
-    path:"/confirmforgetpass",
+    path: "/confirmforgetpass",
     name: "ConfirmForgetPass",
     component: ConfirmForgetPass
   }
