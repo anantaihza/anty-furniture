@@ -47,10 +47,17 @@
             </form>
           </li>
           <li class="nav-item">
-            <router-link type="button" class="btn btnIcon mr-3" to="/cart">
-              <font-awesome-icon :icon="['fas', 'shopping-cart']" />
-              <span class="badge badge-pill badge-danger"></span>
-            </router-link>
+            <div v-if="token">
+              <router-link type="button" class="btn btnIcon mr-3" to="/cart">
+                <font-awesome-icon :icon="['fas', 'shopping-cart']" />
+                <span v-if="qtyTotal > 0" class="badge badge-pill badge-danger">{{ qtyTotal }}</span>
+              </router-link>
+            </div>
+            <div v-else>
+              <router-link type="button" class="btn btnIcon mr-3" to="/login">
+                <font-awesome-icon :icon="['fas', 'shopping-cart']" />
+              </router-link>
+            </div>
           </li>
           <li class="nav-item">
             <div class="dropdown">
@@ -82,6 +89,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "navbar",
   props: {
@@ -104,7 +113,8 @@ export default {
   },
   data() {
     return {
-      token: ""
+      token: "",
+      cart: []
     };
   },
   created() {
@@ -112,6 +122,32 @@ export default {
     if (token) {
       this.token = token;
       console.log("mengakses dengan token");
+    }
+    this.getCart();
+  },
+  computed: {
+    qtyTotal: function() {
+      let qty = 0;
+      for (let key in this.cart) {
+        qty = qty + this.cart[key].quantity;
+      }
+      return qty;
+    }
+  },
+  methods: {
+    getCart() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/core/cart",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+
+      axios(options).then(response => {
+        this.cart = response.data.data.carts;
+        console.log(this.cart);
+      });
     }
   }
 };

@@ -15,21 +15,19 @@
         <button type="button" class="btn">PAY</button>
       </div>
     </div>
-    <footers />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
-import Footers from "@/components/Footers.vue";
+
 
 export default {
   name: "payment-pesanan",
   components: {
     Navbar,
-    Subnav,
-    Footers
+    Subnav
   }
 };
 </script>

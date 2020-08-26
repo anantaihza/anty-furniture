@@ -355,21 +355,18 @@
         </div>
       </div>
     </div>
-    <footers />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
-import Footers from "@/components/Footers.vue";
 import Price from "@/components/Price.vue";
 
 export default {
   name: "profile",
   components: {
     Navbar,
-    Price,
-    Footers
+    Price
   },
   data() {
     return {

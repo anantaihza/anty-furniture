@@ -81,8 +81,6 @@
         </div>
       </div>
     </div>
-
-    <footers />
   </div>
 </template>
 
@@ -90,7 +88,6 @@
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
 import Price from "@/components/Price.vue";
-import Footers from "@/components/Footers.vue";
 import axios from "axios";
 
 export default {
@@ -98,8 +95,7 @@ export default {
   components: {
     Navbar,
     Subnav,
-    Price,
-    Footers
+    Price
   },
   data() {
     return {

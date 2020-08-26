@@ -3,7 +3,7 @@
     <button type="button" class="btn" @click="delQty">-</button>
 
     <div class="num-spin">
-      <input type="number" id="qty" class="form-control border-0" min="1" v-model="qty" />
+      <input type="number" id="qty" class="form-control border-0" min="1" v-model="qty" readonly/>
     </div>
 
     <button type="button" class="btn" @click="addQty">+</button>
@@ -12,30 +12,30 @@
 
 <script>
 export default {
-    name:"quantity",
-    data() {
-      return {
-        qty: 1
-      }
+  name: "quantity",
+  data() {
+    return {
+      qty: 1
+    };
+  },
+  watch: {
+    qty: function() {
+      // Emit this information to the parents component
+      this.$emit("child-qty", this.qty);
+    }
+  },
+  methods: {
+    addQty: function() {
+      this.qty++;
     },
-    watch: {
-      qty: function() {
-        // Emit this information to the parents component
-        this.$emit("child-qty", this.qty);
+    delQty: function() {
+      if (this.qty == 1) {
+        this.qty = 1;
+      } else {
+        this.qty--;
       }
-    },
-    methods: {
-      addQty: function () {
-        this.qty++;
-      },
-      delQty: function () {
-        if (this.qty == 1) {
-          this.qty = 1;
-        } else {
-          this.qty--;
-        }
-      }
-    },
+    }
+  }
 };
 </script>
 

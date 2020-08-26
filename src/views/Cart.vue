@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col-md-12 text-center">
             <h1>Your Basket</h1>
-            <p>2 Items | Rp. 515.000</p>
+            <p>{{ qtyTotal }} Items | <price :value="priceTotal" /></p>
             <router-link type="button" class="btn payment" to="/infoPesanan">Payment</router-link>
           </div>
         </div>
@@ -23,12 +23,11 @@
               <th scope="col">Jumlah</th>
               <th scope="col">Subtotal</th>
               <th scope="col">Remove</th>
-
             </tr>
           </thead>
-          <tbody>
+          <tbody v-for="(item, index) in cart" :key="item.id">
             <tr>
-              <th scope="row">1</th>
+              <th scope="row">{{ index+1 }}</th>
               <td>
                 <div class="row">
                   <div class="col-md-3">
@@ -36,47 +35,36 @@
                   </div>
                   <div class="col-md-6 ml-4 my-auto">
                     <h4>
-                      <b>Antique Brass Tripod Floor Lamp</b>
+                      <b>{{ item.product.productName }}</b>
                     </h4>
-                    <p>Rp. 235.000</p>
-                    <p>Weight : 5.43 Kg</p>
-                    <p>Total Weight : 5.43 Kg</p>
+                    <p>
+                      <price :value="item.product.productPrice" />
+                    </p>
+                    <p>{{ item.product.productDesc }}</p>
                   </div>
                 </div>
               </td>
               <td>
-                <quantity @child-qty="qtyValue" />
-              </td>
-              <td>Rp. 235.000</td>
-              <td>
-                <button class="btn btnRemove">
-                  <font-awesome-icon :icon="['fas', 'trash']" />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>
-                <div class="row">
-                  <div class="col-md-3">
-                    <img src="@/assets/cart/pello-chair.png" alt />
+                <div class="btn-group btn-group-sm spinner" role="group" aria-label="spinnerNumber">
+                  <button type="button" class="btn" @click="delQty">-</button>
+
+                  <div class="num-spin">
+                    <input
+                      type="number"
+                      id="qty"
+                      class="form-control border-0"
+                      min="1"
+                      v-model="item.quantity"
+                      readonly
+                    />
                   </div>
-                  <div class="col-md-6 ml-4 my-auto">
-                    <h4>
-                      <b>Pello Chair</b>
-                    </h4>
-                    <p>Rp. 280.000</p>
-                    <p>Weight : 9.4 Kg</p>
-                    <p>Total Weight : 9.4 Kg</p>
-                  </div>
+
+                  <button type="button" class="btn" @click="addQty">+</button>
                 </div>
               </td>
+              <td><price :value="item.product.productPrice * item.quantity" /></td>
               <td>
-                <quantity @child-qty="qtyValue" />
-              </td>
-              <td>Rp. 235.000</td>
-              <td>
-                <button class="btn btnRemove">
+                <button @click="delCart(item.id)" class="btn btnRemove">
                   <font-awesome-icon :icon="['fas', 'trash']" />
                 </button>
               </td>
@@ -91,24 +79,98 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
-import Quantity from "@/components/Quantity.vue";
+import Price from "@/components/Price.vue";
+import axios from "axios";
 
 export default {
   name: "cart",
   components: {
     Navbar,
     Subnav,
-    Quantity
+    Price
   },
   data() {
     return {
-      qty: 1
+      qty: 1,
+      cart: [],
+      token: ""
+    };
+  },
+  created() {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      this.token = token;
+      console.log("mengakses dengan token");
+    }
+    this.getCart();
+  },
+  computed: {
+    qtyTotal: function() {
+      let qty = 0;
+      for (let key in this.cart) {
+        qty = qty + this.cart[key].quantity;
+      }
+      return qty;
+    },
+    priceTotal: function() {
+      let sum = 0;
+      for (let key in this.cart) {
+        sum = sum + this.cart[key].product.productPrice * this.cart[key].quantity;
+      }
+      return sum;
     }
   },
   methods: {
-    // Gets the checkbox information from the child component
     qtyValue: function(params) {
       this.qty = params;
+    },
+    addQty: function() {
+      this.qty++;
+    },
+    delQty: function() {
+      if (this.qty == 1) {
+        this.qty = 1;
+      } else {
+        this.qty--;
+      }
+    },
+    getCart() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/core/cart",
+        method: "get",
+        headers: {
+          'authorization': this.token
+        }
+      };
+
+      axios(options)
+        .then(response => {
+          this.cart = response.data.data.carts;
+          console.log(this.cart);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    delCart: function(id) {
+      const options = {
+        url: `https://rpl.abisatria.my.id/api/core/cart/${id}`,
+        method: "delete",
+        headers: {
+          'authorization': this.token
+        }
+      };
+
+      axios(options)
+        .then(response => {
+          let check = response.data;
+          this.getCart();
+          this.cart.splice(id, 1)
+          console.log(check);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };
@@ -148,9 +210,32 @@ export default {
   background-color: #d4d4d4;
 }
 .btnRemove {
-  color:rgb(54, 54, 54);
+  color: rgb(54, 54, 54);
 }
 .btnRemove:hover {
   background: rgb(228, 228, 228);
+}
+.spinner button {
+  background: #c4c4c4;
+}
+.num-spin {
+  padding: 0;
+  width: 40px;
+  height: 25px;
+}
+.num-spin input {
+  border-radius: 0;
+  height: 31px;
+  background: #dfdcdc;
+}
+/* Chrome, Safari, Edge, Opera */
+.num-spin input::-webkit-outer-spin-button,
+.num-spin input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.num-spin input[type="number"] {
+  -moz-appearance: textfield;
 }
 </style>

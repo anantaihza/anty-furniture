@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       qty: 1
-    }
+    };
   },
   methods: {
     // Gets the checkbox information from the child component
