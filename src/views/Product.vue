@@ -49,7 +49,7 @@
           <quantity @child-qty="qtyValue" />
           <div class="col-12 mt-4 text-center">
             <button type="button" class="btn buy btn-sm btn-block">BUY</button>
-            <button type="button" class="btn basket btn-sm btn-block">Add to Basket</button>
+            <button @click="addToCart" type="button" class="btn basket btn-sm btn-block">Add to Basket</button>
           </div>
         </div>
       </div>
@@ -93,8 +93,6 @@
             </router-link>
           </div>
         </div>
-
-
       </div>
       <div v-else>
         <h3>Recommendation</h3>
@@ -131,19 +129,25 @@ export default {
     Navbar,
     Subnav,
     Price,
-
     Quantity
   },
   data() {
     return {
       qty: 1,
-      prodDetail: [],
+      idProduct: this.$route.params.id,
+      token: "",
       simProd: [],
-      recommendation: [],
-      idProd: this.$route.params.id
+      prodDetail: [],
+      recommendation: []
     };
   },
   created() {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      this.token = token;
+      console.log("mengakses dengan token");
+    }
+
     this.getDataProduct();
     this.getSimilar();
     this.getRecommendation();
@@ -152,6 +156,40 @@ export default {
     qtyValue: function(params) {
       this.qty = params;
     },
+    buyNow: function() {},
+    addToCart: function() {
+      if (this.token) {
+
+        let token = this.token
+        let productId = this.idProduct;
+        let quantity = this.qty;
+        const options = {
+          url: "https://rpl.abisatria.my.id/api/core/cart",
+          method: "post",
+          data: {
+            productId,
+            quantity
+          },
+          headers: {
+            'authorization' : token
+          }
+        };
+        axios(options)
+          .then(response => {
+            console.log(response.data.data);
+
+
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      } else {
+        this.$router.push({
+          name: "Login"
+        });
+      }
+    },
+
     getDataProduct() {
       const options = {
         url: `https://rpl.abisatria.my.id/api/product/detail/${this.$route.params.id}`,
