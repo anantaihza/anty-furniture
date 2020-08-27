@@ -6,31 +6,25 @@
         <thead>
           <tr>
             <th colspan="2">
-              <h4 class="text-right">Total : Rp. 515.000</h4>
+              <h4 class="text-right">Total : <price :value="priceTotal" /></h4>
             </th>
           </tr>
         </thead>
         <tbody class="scrollbar">
-          <tr>
+          <div v-for="item in cart" :key="item.id">
+            <tr>
             <td>
-              <img src="@/assets/infoPesanan/Lamp.png" alt />
+              <img v-bind="{ src : item.product.productphotos[0].urlPhoto }" width="120rem" />
             </td>
             <td>
-              <p class="font-weight-bold">Antique Brass Tripod Floor Lamp</p>
-              <p>Rp. 235.000</p>
-              <quantity @child-qty="qtyValue" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img src="@/assets/infoPesanan/Chair.png" alt />
-            </td>
-            <td>
-              <p class="font-weight-bold">Pello Chair</p>
-              <p>Rp. 280.000</p>
-              <quantity @child-qty="qtyValue" />
+              <p class="font-weight-bold">{{ item.product.productName }}</p>
+              <p><price :value="item.product.productPrice * item.quantity" /></p>
+              <p>Qty : {{ item.quantity }}</p>
             </td>
           </tr>
+          </div>
+          
+          
         </tbody>
       </table>
     </div>
@@ -38,24 +32,60 @@
 </template>
 
 <script>
-import Quantity from "@/components/Quantity.vue";
+import Price from "@/components/Price.vue";
+import axios from "axios";
+// import Quantity from "@/components/Quantity.vue";
 // import Footers from "@/components/Footers.vue";
 
 export default {
   name: "order-desc",
   components: {
-    Quantity
+    Price
   },
   data() {
     return {
-      qty: 1
+      cart: [],
+      token: ""
     };
   },
-  methods: {
-    // Gets the checkbox information from the child component
-    qtyValue: function(params) {
-      this.qty = params;
+  created() {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      this.token = token;
+      console.log("mengakses dengan token");
     }
+    this.getCart();
+  },
+  computed: {
+    priceTotal: function() {
+      let sum = 0;
+      for (let key in this.cart) {
+        sum =
+          sum + this.cart[key].product.productPrice * this.cart[key].quantity;
+      }
+      return sum;
+    }
+  },
+  methods: {
+   getCart() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/core/cart",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+
+      axios(options)
+        .then(response => {
+          this.cart = response.data.data.carts;
+          console.log(this.cart);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    
   }
 };
 </script>

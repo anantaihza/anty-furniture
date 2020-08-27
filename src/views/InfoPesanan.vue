@@ -9,78 +9,115 @@
           <h2>CUSTOMER INFORMATION</h2>
           <form class="customer-info">
             <div class="form-group row">
-              <label for="form-name" class="col-sm-3 col-form-label">Name*</label>
+              <label for="form-name" class="col-sm-3 col-form-label">Name</label>
               <div class="col-sm-9">
                 <input
                   type="text"
                   class="form-control border-0"
                   id="form-name"
-                  v-model="name"
-                  placeholder="Insert your full name"
+                  v-model="dataProfile.name"
+                  readonly
                 />
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="form-email" class="col-sm-3 col-form-label">Email*</label>
+              <label for="form-email" class="col-sm-3 col-form-label">Email</label>
               <div class="col-sm-9">
                 <input
                   type="email"
                   class="form-control border-0"
                   id="form-email"
-                  v-model="email"
-                  placeholder="Insert your email address"
+                  v-model="dataProfile.email"
+                  readonly
                 />
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="form-address" class="col-sm-3 col-form-label">Address*</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control border-0"
-                  id="form-address"
-                  v-model="address"
-                  placeholder="Insert your address"
-                />
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="form-phoneNumber" class="col-sm-3 col-form-label">Phone Number*</label>
+              <label for="form-phoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
               <div class="col-sm-9 phoneNumber">
                 <input
                   type="number"
                   class="form-control border-0"
                   id="form-phoneNumber"
-                  v-model="number"
-                  placeholder="Insert your phone number"
+                  v-model="dataProfile.phone"
+                  readonly
                 />
               </div>
             </div>
+
+            <div class="form-group row">
+              <label for="form-address" class="col-sm-3 col-form-label">Street*</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control border-0"
+                  id="form-address"
+                  v-model="street"
+                  placeholder="Insert your Street"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="province">Province*</label>
+              <div class="col-sm-9">
+                <select
+                  @click="getCity"
+                  class="form-control border-0"
+                  id="province"
+                  v-model="idProvince"
+                >
+                  <option
+                    v-for="prov in province"
+                    :key="prov.id"
+                    :value="prov.id"
+                  >{{ prov.provinceName }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row" v-if="checkProvince">
+              <label class="col-sm-3 col-form-label" for="province">City*</label>
+              <div class="col-sm-9">
+                <select class="form-control border-0" id="province" v-model="idCity">
+                  <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.cityName }}</option>
+                </select>
+              </div>
+            </div>
+
             <hr />
             <div class="form-group mt-4">
               <!-- loop from database -->
               <label for="payment-method">Payment Method</label>
-              <select class="form-control border-0" id="payment-method" v-model="paymentMethod">
-                <option>BCA</option>
-                <option>Mandiri</option>
-                <option>s</option>
-                <option>4</option>
-                <option>5</option>
+              <select class="form-control border-0" id="payment-method" v-model="IdpaymentMethod">
+                <option v-for="pay in payMethod" :key="pay.id" :value="pay.id">{{ pay.paymentBank }}</option>
               </select>
             </div>
 
             <div class="form-group">
-              <!-- loop from database -->
+              <label for="delivery-service">Courier</label>
+              <select class="form-control border-0" id="delivery-service" v-model="deliveryCourier">
+                <option value="jne">JNE</option>
+                <option value="tiki">Tiki</option>
+                <option value="pos">Pos</option>
+              </select>
+            </div>
+
+            <div class="form-group">
               <label for="delivery-service">Delivery Service</label>
-              <select class="form-control border-0" id="delivery-service" v-model="deliveryService">
-                <option>GO-BOX</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+              <select
+                @click="getDeliveryService"
+                class="form-control border-0"
+                id="delivery-service"
+                v-model="deliveryService"
+              >
+                <option
+                  v-for="delService in dataDelService"
+                  :key="delService.service"
+                  :value="delService.cost[0].value"
+                >{{ delService.service }} ({{ delService.description }})</option>
               </select>
             </div>
 
@@ -91,7 +128,7 @@
                   type="text"
                   class="form-control form-control-sm border-0"
                   id="delivery-fee"
-                  value="Rp. 83.000"
+                  :value="deliveryService"
                   readonly
                 />
               </div>
@@ -113,26 +150,171 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
-// import InfoCustomer from "@/components/InfoCustomer.vue";
 import OrderDesc from "@/components/OrderDesc.vue";
+import axios from "axios";
 
 export default {
   name: "info-pesanan",
+  props: ["getTotalWeight"],
   components: {
     Navbar,
     Subnav,
-    // InfoCustomer,
     OrderDesc
   },
   data() {
     return {
-      name: "",
-      email: "",
-      address: "",
-      number: "",
-      paymentMethod: "",
+      idCity: null,
+      idProvince: null,
+      IdpaymentMethod: "",
+      checkProvince: false,
+      token: "",
+      street: "",
+      deliveryCourier: "",
       deliveryService: "",
-      
+      cart: [],
+      cities: [],
+      province: [],
+      payMethod: [],
+      dataProfile: [],
+      dataDelService: []
+    };
+  },
+  created() {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      this.token = token;
+      console.log(token);
+    }
+    this.getProfile();
+    this.getProvince();
+    this.getPaymentMethod();
+    this.getCart();
+  },
+  methods: {
+    getProfile() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/customer/profile",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+
+      axios(options)
+        .then(response => {
+          this.dataProfile = response.data.data;
+          console.log(this.dataProfile);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getProvince() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/ongkir/province",
+        method: "get"
+      };
+
+      axios(options)
+        .then(response => {
+          this.province = response.data.data;
+
+          console.log("prov", this.province);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getCity() {
+      const options = {
+        url: `https://rpl.abisatria.my.id/api/ongkir/city?provinceId=${this.idProvince}`,
+        method: "get"
+      };
+
+      axios(options)
+        .then(response => {
+          this.cities = response.data.data;
+          this.checkProvince = true;
+          console.log("city", this.cities);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getPaymentMethod() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/core/paymentMethod",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+
+      axios(options)
+        .then(response => {
+          this.payMethod = response.data.data;
+
+          console.log("pay: ", this.payMethod);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getDeliveryService() {
+      let tw = 0;
+      for (let key in this.cart) {
+        tw =
+          tw +
+          this.cart[key].product.productWeight * this.cart[key].quantity * 1000;
+      }
+      if (this.token) {
+        let token = this.token;
+        let destination = this.idCity;
+        if (tw > 30000) {
+          tw = 30000;
+        }
+        let weight = tw;
+        let courier = this.deliveryCourier;
+        const options = {
+          url: "https://rpl.abisatria.my.id/api/ongkir/courierFee",
+          method: "post",
+          data: {
+            destination,
+            weight,
+            courier
+          },
+          headers: {
+            authorization: token
+          }
+        };
+        axios(options)
+          .then(response => {
+
+            this.dataDelService = response.data.data.costs;
+            console.log("datanya: ", this.dataDelService);
+          })
+          .catch(e => {
+            console.log(e.response);
+          });
+      }
+    },
+    getCart() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/core/cart",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+
+      axios(options)
+        .then(response => {
+          this.cart = response.data.data.carts;
+          console.log(this.cart);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };
@@ -175,7 +357,7 @@ h2 {
   margin: 0;
 }
 /* Firefox */
-.phoneNumber input[type=number] {
+.phoneNumber input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>
