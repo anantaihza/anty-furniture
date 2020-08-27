@@ -1,11 +1,9 @@
 <template>
   <div class="btn-group btn-group-sm spinner" role="group" aria-label="spinnerNumber">
     <button type="button" class="btn" @click="delQty">-</button>
-
     <div class="num-spin">
-      <input type="number" id="qty" class="form-control border-0" min="1" v-model="qty" readonly/>
+      <input type="number" id="qty" class="form-control border-0" min="1" v-model="qty" readonly />
     </div>
-
     <button type="button" class="btn" @click="addQty">+</button>
   </div>
 </template>
@@ -20,7 +18,6 @@ export default {
   },
   watch: {
     qty: function() {
-      // Emit this information to the parents component
       this.$emit("child-qty", this.qty);
     }
   },

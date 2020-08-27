@@ -2,7 +2,6 @@
   <div>
     <navbar :navInfoPesanan="true" />
     <subnav />
-
     <div class="container order-info">
       <div class="row">
         <div class="col-md-6">
@@ -20,7 +19,6 @@
                 />
               </div>
             </div>
-
             <div class="form-group row">
               <label for="form-email" class="col-sm-3 col-form-label">Email</label>
               <div class="col-sm-9">
@@ -33,7 +31,6 @@
                 />
               </div>
             </div>
-
             <div class="form-group row">
               <label for="form-phoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
               <div class="col-sm-9 phoneNumber">
@@ -46,7 +43,6 @@
                 />
               </div>
             </div>
-
             <div class="form-group row">
               <label for="form-address" class="col-sm-3 col-form-label">Street*</label>
               <div class="col-sm-9">
@@ -77,16 +73,14 @@
                 </select>
               </div>
             </div>
-
             <div class="form-group row" v-if="checkProvince">
-              <label class="col-sm-3 col-form-label" for="province">City*</label>
+              <label class="col-sm-3 col-form-label" for="city">City*</label>
               <div class="col-sm-9">
-                <select class="form-control border-0" id="province" v-model="idCity">
+                <select class="form-control border-0" id="city" v-model="idCity">
                   <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.cityName }}</option>
                 </select>
               </div>
             </div>
-
             <hr />
             <div class="form-group mt-4">
               <!-- loop from database -->
@@ -95,16 +89,14 @@
                 <option v-for="pay in payMethod" :key="pay.id" :value="pay.id">{{ pay.paymentBank }}</option>
               </select>
             </div>
-
             <div class="form-group">
-              <label for="delivery-service">Courier</label>
-              <select class="form-control border-0" id="delivery-service" v-model="deliveryCourier">
+              <label for="delivery-courier">Courier</label>
+              <select class="form-control border-0" id="delivery-courier" v-model="deliveryCourier">
                 <option value="jne">JNE</option>
                 <option value="tiki">Tiki</option>
                 <option value="pos">Pos</option>
               </select>
             </div>
-
             <div class="form-group">
               <label for="delivery-service">Delivery Service</label>
               <select
@@ -116,29 +108,28 @@
                 <option
                   v-for="delService in dataDelService"
                   :key="delService.service"
-                  :value="delService.cost[0].value"
+                  :value="delService"
                 >{{ delService.service }} ({{ delService.description }})</option>
               </select>
             </div>
-
             <div class="form-group row pb-4 pt-1">
               <label for="delivery-fee" class="col-sm-3 col-form-label">Delivery Fee</label>
               <div class="col-sm-9">
-                <input
+                  <div v-for="c in deliveryService.cost" :key="c.value">
+                    <input
                   type="text"
                   class="form-control form-control-sm border-0"
                   id="delivery-fee"
-                  :value="deliveryService"
+                  v-model="c.value"
                   readonly
                 />
+                  </div>  
               </div>
             </div>
-
             <router-link type="button" class="btn next-btn ml-auto" to="/reviewPesanan">Next</router-link>
           </form>
         </div>
         <div class="vr"></div>
-
         <div class="col-md-5">
           <order-desc />
         </div>
@@ -165,12 +156,12 @@ export default {
     return {
       idCity: null,
       idProvince: null,
-      IdpaymentMethod: "",
+      IdpaymentMethod: null,
       checkProvince: false,
       token: "",
       street: "",
       deliveryCourier: "",
-      deliveryService: "",
+      deliveryService: [],
       cart: [],
       cities: [],
       province: [],
@@ -183,7 +174,6 @@ export default {
     const token = localStorage.getItem("access_token");
     if (token) {
       this.token = token;
-      console.log(token);
     }
     this.getProfile();
     this.getProvince();
@@ -199,11 +189,10 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options)
         .then(response => {
           this.dataProfile = response.data.data;
-          console.log(this.dataProfile);
+          console.log('Profile : ', this.dataProfile);
         })
         .catch(e => {
           console.log(e);
@@ -214,12 +203,10 @@ export default {
         url: "https://rpl.abisatria.my.id/api/ongkir/province",
         method: "get"
       };
-
       axios(options)
         .then(response => {
           this.province = response.data.data;
-
-          console.log("prov", this.province);
+          console.log("Provinsi : ", this.province);
         })
         .catch(e => {
           console.log(e);
@@ -230,12 +217,11 @@ export default {
         url: `https://rpl.abisatria.my.id/api/ongkir/city?provinceId=${this.idProvince}`,
         method: "get"
       };
-
       axios(options)
         .then(response => {
           this.cities = response.data.data;
           this.checkProvince = true;
-          console.log("city", this.cities);
+          console.log("City : ", this.cities);
         })
         .catch(e => {
           console.log(e);
@@ -249,12 +235,10 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options)
         .then(response => {
           this.payMethod = response.data.data;
-
-          console.log("pay: ", this.payMethod);
+          console.log("Payment Method : ", this.payMethod);
         })
         .catch(e => {
           console.log(e);
@@ -289,9 +273,9 @@ export default {
         };
         axios(options)
           .then(response => {
-
             this.dataDelService = response.data.data.costs;
-            console.log("datanya: ", this.dataDelService);
+            console.log("Delivery Service : ", this.dataDelService);
+            console.log("Delivery Service Value : ", this.deliveryService.cost[0].value); 
           })
           .catch(e => {
             console.log(e.response);
@@ -306,11 +290,9 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options)
         .then(response => {
           this.cart = response.data.data.carts;
-          console.log(this.cart);
         })
         .catch(e => {
           console.log(e);

@@ -6,13 +6,13 @@
       <div class="row">
         <div class="col-md-5">
           <a href="#">
-            <img src="@/assets/landing/promo1.png" alt width="100%" />
+            <img src="@/assets/landing/promo1.png" alt width="85%" />
           </a>
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-5">
           <a href="#">
-            <img src="@/assets/landing/promo2.png" alt width="100%" />
+            <img src="@/assets/landing/promo2.png" alt width="85%" />
           </a>
         </div>
       </div>
@@ -85,9 +85,7 @@ export default {
     const token = localStorage.getItem("access_token");
     if (token) {
       this.token = token;
-      console.log("mengakses dengan token");
     }
-
     this.getNewItem();
     this.getRecommendation();
   },
@@ -97,11 +95,9 @@ export default {
         url: "https://rpl.abisatria.my.id/api/search/newItems/product",
         method: "get"
       };
-
       axios(options)
         .then(response => {
           this.newItem = response.data.data;
-          console.log(this.newItem);
         })
         .catch(e => {
           console.log(e);
@@ -112,11 +108,9 @@ export default {
         url: "https://rpl.abisatria.my.id/api/search/recommendation/product",
         method: "get"
       };
-
       axios(options)
         .then(response => {
           this.recommendation = response.data.data;
-          console.log("rec", this.recommendation);
         })
         .catch(e => {
           console.log(e);
@@ -133,7 +127,6 @@ export default {
 #new-items {
   margin-top: 5%;
 }
-
 .card:hover {
   background: rgb(235, 235, 235);
 }

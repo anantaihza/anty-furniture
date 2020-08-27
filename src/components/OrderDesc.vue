@@ -6,25 +6,28 @@
         <thead>
           <tr>
             <th colspan="2">
-              <h4 class="text-right">Total : <price :value="priceTotal" /></h4>
+              <h4 class="text-right">
+                Total :
+                <price :value="priceTotal" />
+              </h4>
             </th>
           </tr>
         </thead>
         <tbody class="scrollbar">
           <div v-for="item in cart" :key="item.id">
             <tr>
-            <td>
-              <img v-bind="{ src : item.product.productphotos[0].urlPhoto }" width="120rem" />
-            </td>
-            <td>
-              <p class="font-weight-bold">{{ item.product.productName }}</p>
-              <p><price :value="item.product.productPrice * item.quantity" /></p>
-              <p>Qty : {{ item.quantity }}</p>
-            </td>
-          </tr>
+              <td>
+                <img v-bind="{ src : item.product.productphotos[0].urlPhoto }" width="120rem" />
+              </td>
+              <td>
+                <p class="font-weight-bold">{{ item.product.productName }}</p>
+                <p>
+                  <price :value="item.product.productPrice * item.quantity" />
+                </p>
+                <p>Qty : {{ item.quantity }}</p>
+              </td>
+            </tr>
           </div>
-          
-          
         </tbody>
       </table>
     </div>
@@ -34,8 +37,6 @@
 <script>
 import Price from "@/components/Price.vue";
 import axios from "axios";
-// import Quantity from "@/components/Quantity.vue";
-// import Footers from "@/components/Footers.vue";
 
 export default {
   name: "order-desc",
@@ -67,7 +68,7 @@ export default {
     }
   },
   methods: {
-   getCart() {
+    getCart() {
       const options = {
         url: "https://rpl.abisatria.my.id/api/core/cart",
         method: "get",
@@ -75,7 +76,6 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options)
         .then(response => {
           this.cart = response.data.data.carts;
@@ -84,8 +84,7 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    },
-    
+    }
   }
 };
 </script>
@@ -108,7 +107,6 @@ h2 {
 .table-fixed th {
   display: block;
 }
-
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar::-webkit-scrollbar {
   display: none;

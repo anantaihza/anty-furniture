@@ -14,17 +14,14 @@
         <div class="col-md-12 col-lg-6 my-auto">
           <div class="formulir">
             <h1 class="d-block d-sm-block d-md-block d-lg-none">Anty Furniture</h1>
-
             <ValidationObserver v-slot="{ passes }">
               <form @submit.prevent="passes(onSubmit)">
                 <div class="form-group">
                   <label for="code">Code</label>
                   <div class="code">
                     <input type="number" class="form-control" id="code" />
-
                   </div>
                 </div>
-
                 <ValidationProvider
                   tag="div"
                   rules="required|min:6|confirmed:pass"
@@ -36,7 +33,6 @@
                     <span v-bind="ariaMsg" v-if="errors[0]">{{ errors[0] }}</span>
                   </div>
                 </ValidationProvider>
-
                 <ValidationProvider
                   tag="div"
                   rules="required"
@@ -49,7 +45,6 @@
                     <span v-bind="ariaMsg" v-if="errors[0]">{{ errors[0] }}</span>
                   </div>
                 </ValidationProvider>
-
                 <div class="d-flex justify-content-center mt-5">
                   <button type="submit" class="btn">Save</button>
                 </div>
@@ -91,7 +86,6 @@ export default {
   overflow: auto;
   width: 66px;
   height: 55rem;
-
   background: #fd961e;
 }
 .brand {

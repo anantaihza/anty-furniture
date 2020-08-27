@@ -29,7 +29,6 @@
               <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" v-model="email" />
-                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
@@ -44,7 +43,6 @@
               class="d-flex justify-content-center mt-3"
               to="/register"
             >Don't have an account ?</router-link>
-            
           </div>
         </div>
       </div>
@@ -69,7 +67,6 @@ export default {
       if (this.email.trim() && this.password.trim()) {
         let email = this.email;
         let password = this.password;
-
         const options = {
           url: "https://rpl.abisatria.my.id//api/customer/login",
           method: "post",
@@ -78,13 +75,11 @@ export default {
             password
           }
         };
-
         axios(options)
           .then(response => {
             const token = response.data.data.token;
             console.log(response.data.data.token);
             localStorage.setItem('access_token', token);
-
             if (token) {
               this.$router.push({
                 name: "Landing",
@@ -95,7 +90,6 @@ export default {
             }
           })
           .catch(e => {
-            // alert(e);
             console.log(e)
             let error = true;
             this.error = error
@@ -112,7 +106,6 @@ export default {
   overflow: auto;
   width: 66px;
   height: 55rem;
-
   background: #fd961e;
 }
 .brand {

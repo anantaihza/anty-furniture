@@ -113,15 +113,14 @@ export default {
   },
   data() {
     return {
-      token: "",
-      cart: []
+      cart: [],
+      token: ""
     };
   },
   created() {
     const token = localStorage.getItem("access_token");
     if (token) {
       this.token = token;
-      console.log("mengakses dengan token");
     }
     this.getCart();
   },
@@ -143,10 +142,8 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options).then(response => {
         this.cart = response.data.data.carts;
-        console.log(this.cart);
       });
     }
   }

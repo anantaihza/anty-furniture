@@ -48,14 +48,11 @@ export default {
         url: "https://rpl.abisatria.my.id/api/room/",
         method: "get"
       };
-
       axios(options)
         .then(response => {
           this.rooms = response.data.data;
-          console.log("Room : ", this.rooms);
         })
         .catch(e => {
-          // alert(e);
           console.log(e);
         });
     }

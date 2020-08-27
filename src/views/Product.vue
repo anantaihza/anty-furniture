@@ -139,8 +139,8 @@ export default {
   data() {
     return {
       qty: 1,
-      idProduct: this.$route.params.id,
       token: "",
+      idProduct: this.$route.params.id,
       simProd: [],
       prodDetail: [],
       recommendation: []
@@ -150,9 +150,7 @@ export default {
     const token = localStorage.getItem("access_token");
     if (token) {
       this.token = token;
-      console.log("mengakses dengan token");
     }
-
     this.getDataProduct();
     this.getSimilar();
     this.getRecommendation();
@@ -179,7 +177,7 @@ export default {
         };
         axios(options)
           .then(response => {
-            console.log(response.data.data);
+            console.log('BuyNow : ', response.data.data);
             this.$router.push({
               name: "Cart"
             });
@@ -212,7 +210,7 @@ export default {
         };
         axios(options)
           .then(response => {
-            console.log(response.data.data);
+            console.log('addToCart : ', response.data.data);
             alert("Berhasil Dimasukan ke Cart");
           })
           .catch(e => {
@@ -229,11 +227,9 @@ export default {
         url: `https://rpl.abisatria.my.id/api/product/detail/${this.$route.params.id}`,
         method: "get"
       };
-
       axios(options)
         .then(response => {
           this.prodDetail = response.data.data;
-          console.log("Product Detail :", this.prodDetail);
         })
         .catch(e => {
           console.log(e);
@@ -248,7 +244,6 @@ export default {
       axios(options)
         .then(response => {
           this.simProd = response.data.data;
-          console.log("Product similar :", this.simProd);
         })
         .catch(e => {
           console.log(e);
@@ -263,7 +258,6 @@ export default {
       axios(options)
         .then(response => {
           this.recommendation = response.data.data;
-          console.log("rec", this.recommendation);
         })
         .catch(e => {
           console.log(e);

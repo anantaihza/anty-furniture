@@ -2,96 +2,134 @@
   <div>
     <navbar :navReviewPesanan="true" />
     <subnav />
-
     <div class="container order-info">
       <div class="row">
         <div class="col-md-6">
           <h2>REVIEW CUSTOMER INFORMATION</h2>
           <form class="customer-info">
             <div class="form-group row">
-              <label for="form-name" class="col-sm-3 col-form-label">Name*</label>
+              <label for="form-name" class="col-sm-3 col-form-label">Name</label>
               <div class="col-sm-9">
                 <input
                   type="text"
                   class="form-control border-0"
                   id="form-name"
-                  value="Example Name"
-                />
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="form-email" class="col-sm-3 col-form-label">Email*</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control border-0"
-                  id="form-email"
-                  value="Example Email"
-                />
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="form-address" class="col-sm-3 col-form-label">Address*</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control border-0"
-                  id="form-address"
-                  value="Example Address"
-                />
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="form-phoneNumber" class="col-sm-3 col-form-label">Phone Number*</label>
-              <div class="col-sm-9 phoneNumber">
-                <input
-                  type="number"
-                  class="form-control border-0"
-                  id="form-phoneNumber"
-                  value="08222222222"
-                />
-              </div>
-            </div>
-            <hr />
-            <div class="form-group mt-4">
-              <label for="payment-method">Payment Method</label>
-              <select class="form-control border-0" id="payment-method">
-                <option>BCA</option>
-                <option>Mandiri</option>
-                <option>s</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="delivery-service">Delivery Service</label>
-              <select class="form-control border-0" id="delivery-service">
-                <option>GO-BOX</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-
-            <div class="form-group row pb-4 pt-1">
-              <label for="delivery-fee" class="col-sm-3 col-form-label">Delivery Fee</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control form-control-sm border-0"
-                  id="delivery-fee"
-                  value="Rp. 83.000"
+                  
                   readonly
                 />
               </div>
             </div>
 
-            <router-link type="button" class="btn next-btn ml-auto" to="/paymentPesanan">Next</router-link>
+            <div class="form-group row">
+              <label for="form-email" class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm-9">
+                <input
+                  type="email"
+                  class="form-control border-0"
+                  id="form-email"
+                  
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="form-phoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
+              <div class="col-sm-9 phoneNumber">
+                <input
+                  type="number"
+                  class="form-control border-0"
+                  id="form-phoneNumber"
+                  
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="form-address" class="col-sm-3 col-form-label">Street</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control border-0"
+                  id="form-address"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="province">Province</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control border-0"
+                  id="province"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="city">City</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control border-0"
+                  id="city"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <hr />
+            <div class="form-group mt-4">
+              <!-- loop from database -->
+              <label for="payment-method">Payment Method</label>
+              <input
+                  type="text"
+                  class="form-control border-0"
+                  id="payment-method"
+                  readonly
+                />
+            </div>
+
+            <div class="form-group">
+              <label for="delivery-courier">Courier</label>
+              <input
+                  type="text"
+                  class="form-control border-0"
+                  id="delivery-courier"
+                  readonly
+                />
+            </div>
+
+            <div class="form-group">
+              <label for="delivery-service">Delivery Service</label>
+              <input
+                  type="text"
+                  class="form-control border-0"
+                  id="delivery-service"
+                  readonly
+                />
+            </div>
+
+            <div class="form-group row pb-4 pt-1">
+              <label for="delivery-fee" class="col-sm-3 col-form-label">Delivery Fee</label>
+              <div class="col-sm-9">
+                  <input
+                  type="text"
+                  class="form-control form-control-sm border-0"
+                  id="delivery-fee"
+                  
+                  readonly
+                />
+                
+                
+
+              </div>
+            </div>
+
+            <router-link type="button" class="btn next-btn ml-auto" to="/reviewPesanan">Next</router-link>
           </form>
         </div>
         <div class="vr"></div>

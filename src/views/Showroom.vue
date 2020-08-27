@@ -29,7 +29,6 @@
         </tbody>
       </table>
     </div>
-
     <div class="container" id="preference-product">
       <div v-if="ctgClick == false" class="row text-center">
         <div class="container mb-4">
@@ -50,8 +49,6 @@
           </router-link>
         </div>
       </div>
-
-
       <div v-else-if="product.length == 0 || category.length == 0">
         <div class="jumbotron jumbotron-fluid bg-white">
           <div class="container text-center">
@@ -61,9 +58,6 @@
           </div>
         </div>
       </div>
-
-      
-
       <div v-else class="row text-center">
         <div class="col-md-4 col-lg-3 col-sm-6 col-6" v-for="prod in product" :key="prod.id">
           <router-link :to="{ name: 'Product', params: { id: prod.id } }" class="btn">
@@ -99,10 +93,10 @@ export default {
   },
   data() {
     return {
-      room: [],
-      category: [],
-      product: [],
       ctgClick: false,
+      room: [],
+      product: [],
+      category: [],
       recommendation: []
     };
   },
@@ -119,12 +113,10 @@ export default {
       };
       axios(options)
         .then(response => {
-          console.log("data room :", response.data.data);
           let roomId = response.data.data;
           this.room = roomId;
         })
         .catch(e => {
-          // alert(e);
           console.log(e);
         });
     },
@@ -144,7 +136,6 @@ export default {
               }
             });
           });
-          console.log("categories id: ", dataCategory.id);
           this.category = dataCategory;
         })
         .catch(e => {
@@ -159,12 +150,10 @@ export default {
       axios(options)
         .then(response => {
           let ctgId = response.data.data;
-          console.log(ctgId);
           this.product = ctgId;
           this.ctgClick = true
         })
         .catch(e => {
-          // alert(e);
           console.log(e);
         });
     },
@@ -173,11 +162,9 @@ export default {
         url: "https://rpl.abisatria.my.id/api/search/recommendation/product",
         method: "get"
       };
-
       axios(options)
         .then(response => {
           this.recommendation = response.data.data;
-          console.log("rec", this.recommendation);
         })
         .catch(e => {
           console.log(e);
@@ -206,13 +193,11 @@ export default {
   background-color: #d8d8d8;
 }
 .col-md-4 .card img {
-  /* width: 40%; */
   display: block;
   margin: 20px auto;
   height: 12vw;
   object-fit: contain;
 }
-
 #head-category {
   margin-top: 50px;
 }

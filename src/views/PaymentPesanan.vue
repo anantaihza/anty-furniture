@@ -22,7 +22,6 @@
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
 
-
 export default {
   name: "payment-pesanan",
   components: {
@@ -34,24 +33,24 @@ export default {
 
 <style scoped>
 h4 {
-    font-weight: 500;
-    color: #424242;
-    margin-top: 6%;
-    margin-bottom: 3%;
+  font-weight: 500;
+  color: #424242;
+  margin-top: 6%;
+  margin-bottom: 3%;
 }
 .card {
-    margin : auto 20%;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  margin: auto 20%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 }
 .payment button {
-    margin-bottom: 50px;
-    padding-right: 50px;
-    padding-left: 50px;
-    border-radius: 0;
-    background: #FD961E;
+  margin-bottom: 50px;
+  padding-right: 50px;
+  padding-left: 50px;
+  border-radius: 0;
+  background: #fd961e;
 }
 .payment button:hover {
-    background: #f08d1d;
+  background: #f08d1d;
 }
 </style>

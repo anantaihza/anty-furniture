@@ -14,7 +14,6 @@
             <div v-if="!cart.length == 0">
               <router-link type="button" class="btn payment" to="/infoPesanan">Payment</router-link>
             </div>
-
           </div>
         </div>
       </div>
@@ -53,7 +52,6 @@
               <td>
                 <div class="btn-group btn-group-sm spinner" role="group" aria-label="spinnerNumber">
                   <button type="button" class="btn" @click="delQty(item.id, index)">-</button>
-
                   <div class="num-spin">
                     <input
                       type="number"
@@ -64,7 +62,6 @@
                       readonly
                     />
                   </div>
-
                   <button type="button" class="btn" @click="addQty(item.id, index)">+</button>
                 </div>
               </td>
@@ -108,7 +105,6 @@ export default {
     const token = localStorage.getItem("access_token");
     if (token) {
       this.token = token;
-      console.log("mengakses dengan token");
     }
     this.getCart();
   },
@@ -145,14 +141,13 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options)
         .then(response => {
           this.getCart();
-          console.log(response.data);
+          console.log('AddQty : ', response.data);
         })
         .catch(e => {
-          console.log(e.response);
+          console.log(e);
         });
     },
     delQty: function(idCart, idx) {
@@ -164,13 +159,11 @@ export default {
             authorization: this.token
           }
         };
-
         axios(options)
           .then(response => {
-            let check = response.data;
+            console.log('delQty : ', response.data);
             this.getCart();
             this.cart.splice(idCart, 1);
-            console.log(check);
           })
           .catch(e => {
             console.log(e);
@@ -187,11 +180,10 @@ export default {
             authorization: this.token
           }
         };
-
         axios(options)
           .then(response => {
             this.getCart();
-            console.log(response.data);
+            console.log('delQty : ', response.data);
           })
           .catch(e => {
             console.log(e);
@@ -206,11 +198,9 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options)
         .then(response => {
           this.cart = response.data.data.carts;
-          console.log(this.cart);
         })
         .catch(e => {
           console.log(e);
@@ -224,13 +214,11 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options)
         .then(response => {
-          let check = response.data;
+          console.log('delCart : ', response.data);
           this.getCart();
           this.cart.splice(id, 1);
-          console.log(check);
         })
         .catch(e => {
           console.log(e);

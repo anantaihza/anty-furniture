@@ -9,7 +9,6 @@
         <div class="col-md-9 my-auto">
           <h1>{{ dataProfile.name }}</h1>
           <div class="col-3 pl-0">
-            <!-- <button type="button" class="btn btn-warning btn-sm btn-block">Edit Profile</button> -->
             <!-- Button trigger modal -->
             <button
               type="button"
@@ -17,7 +16,6 @@
               data-toggle="modal"
               data-target="#editProfile"
             >Edit Profile</button>
-
             <!-- Modal -->
             <div
               class="modal fade"
@@ -72,8 +70,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- <button type="button" class="btn btn-warning btn-sm btn-block">Setting</button> -->
 
             <!-- Button trigger modal -->
             <button
@@ -274,7 +270,7 @@
       </div>
 
       <hr class="d-block d-sm-block d-md-block d-lg-none" />
-      <!-- <button class="btn btn-warning btn-lg">Delivery Status</button> -->
+
       <!-- Button trigger modal delivery -->
       <button
         type="button"
@@ -374,14 +370,12 @@ export default {
     const token = localStorage.getItem("access_token");
     if (token) {
       this.token = token;
-      console.log("mengakses dengan token");
     }
     this.getProfile();
   },
   methods: {
     logout: function() {
       localStorage.removeItem("access_token");
-
       this.$router.push({
         name: "Landing"
       });
@@ -400,14 +394,13 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options)
         .then(response => {
           this.getProfile();
-          console.log(response.data);
+          console.log('Update Profile', response.data);
         })
         .catch(e => {
-          console.log(e.response);
+          console.log(e);
         });
     },
     updateEmail: function() {
@@ -422,11 +415,10 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options)
         .then(response => {
           this.getProfile();
-          console.log(response.data);
+          console.log('Update Email : ', response.data);
         })
         .catch(e => {
           console.log(e.response);
@@ -440,11 +432,10 @@ export default {
           authorization: this.token
         }
       };
-
       axios(options)
         .then(response => {
           this.dataProfile = response.data.data;
-          console.log(this.dataProfile);
+          console.log('Data Profile : ', this.dataProfile);
         })
         .catch(e => {
           console.log(e);

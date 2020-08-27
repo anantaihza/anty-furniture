@@ -14,7 +14,6 @@
         <div class="col-md-12 col-lg-6 my-auto">
           <div class="formulir">
             <h1 class="d-block d-sm-block d-md-block d-lg-none">Anty Furniture</h1>
-           
             <form>
               <div class="form-group">
                 <label for="email">Email</label>
@@ -25,8 +24,6 @@
                 <button type="submit" class="btn">Send Code</button>
               </div>
             </form>
-            
-            
           </div>
         </div>
       </div>
@@ -35,17 +32,13 @@
 </template>
 
 <script>
-
-
 export default {
   name: "login",
   data() {
     return {
       
-     
     };
   },
- 
 };
 </script>
 
@@ -55,7 +48,6 @@ export default {
   overflow: auto;
   width: 66px;
   height: 55rem;
-
   background: #fd961e;
 }
 .brand {
