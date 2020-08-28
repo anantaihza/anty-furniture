@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Cart from "../views/Cart.vue";
 import Login from "../views/Login.vue";
+import Search from "../views/Search.vue";
 import Landing from "../views/Landing.vue";
 import Product from "../views/Product.vue";
 import Profile from "../views/Profile.vue";
@@ -75,6 +76,11 @@ const routes = [
     path: "/confirmforgetpass",
     name: "ConfirmForgetPass",
     component: ConfirmForgetPass
+  },
+  {
+    path: "/search/:key",
+    name: "Search",
+    component: Search
   }
 ];
 

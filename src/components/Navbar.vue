@@ -40,10 +40,10 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <form class="search mr-5">
-              <input type="text" placeholder="Search.." name="search" class="search-box" />
-              <button type="submit" class="btn btnIcon">
+              <input type="text" placeholder="Search.." name="search" class="search-box" v-model="search" />
+              <router-link :to="{ name: 'Search', params: { key: search } }" class="btn btnIcon">
                 <font-awesome-icon :icon="['fas', 'search']" />
-              </button>
+              </router-link>
             </form>
           </li>
           <li class="nav-item">
@@ -114,7 +114,8 @@ export default {
   data() {
     return {
       cart: [],
-      token: ""
+      token: "",
+      search: null
     };
   },
   created() {
@@ -145,7 +146,8 @@ export default {
       axios(options).then(response => {
         this.cart = response.data.data.carts;
       });
-    }
+    },
+    
   }
 };
 </script>
@@ -173,7 +175,7 @@ export default {
   border: none;
   border-radius: 4px;
 }
-.search button {
+.search .btnIcon {
   position: relative;
   right: 30px;
   bottom: 1px;
