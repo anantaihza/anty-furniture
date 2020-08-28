@@ -126,7 +126,7 @@
                   </div>  
               </div>
             </div>
-            <router-link type="button" class="btn next-btn ml-auto" to="/reviewPesanan">Next</router-link>
+            <button @click="submitData" type="button" class="btn next-btn ml-auto" to="/reviewPesanan">Next</button>
           </form>
         </div>
         <div class="vr"></div>
@@ -181,6 +181,27 @@ export default {
     this.getCart();
   },
   methods: {
+    submitData: function() {
+      let street = this.street
+      let cityId = this.idCity
+      let provinceId = this.idProvince
+      let courierName = this.deliveryCourier
+      let courierService = this.deliveryService.service
+      let courierFee = this.deliveryService.cost[0].value
+      let paymentMethodId = this.IdpaymentMethod
+      sessionStorage.setItem("street", street);
+      sessionStorage.setItem("cityId", cityId);
+      sessionStorage.setItem("provinceId", provinceId);
+      sessionStorage.setItem("courierName", courierName);
+      sessionStorage.setItem("courierService", courierService);
+      sessionStorage.setItem("courierFee", courierFee);
+      sessionStorage.setItem("paymentMethodId", paymentMethodId);
+      
+      this.$router.push({
+          name: "ReviewPesanan",
+      });
+      
+    },
     getProfile() {
       const options = {
         url: "https://rpl.abisatria.my.id/api/customer/profile",

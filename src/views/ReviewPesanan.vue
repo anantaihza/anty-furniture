@@ -14,7 +14,7 @@
                   type="text"
                   class="form-control border-0"
                   id="form-name"
-                  
+                  v-model="dataProfile.name"
                   readonly
                 />
               </div>
@@ -27,7 +27,7 @@
                   type="email"
                   class="form-control border-0"
                   id="form-email"
-                  
+                  v-model="dataProfile.email"
                   readonly
                 />
               </div>
@@ -40,7 +40,7 @@
                   type="number"
                   class="form-control border-0"
                   id="form-phoneNumber"
-                  
+                  v-model="dataProfile.phone"
                   readonly
                 />
               </div>
@@ -53,6 +53,7 @@
                   type="text"
                   class="form-control border-0"
                   id="form-address"
+                  v-model="street"
                   readonly
                 />
               </div>
@@ -64,6 +65,7 @@
                   type="text"
                   class="form-control border-0"
                   id="province"
+                  v-model="province.provinceName"
                   readonly
                 />
               </div>
@@ -76,6 +78,7 @@
                   type="text"
                   class="form-control border-0"
                   id="city"
+                  v-model="cities.cityName"
                   readonly
                 />
               </div>
@@ -89,6 +92,7 @@
                   type="text"
                   class="form-control border-0"
                   id="payment-method"
+                  v-model="payMethod.paymentBank"
                   readonly
                 />
             </div>
@@ -99,16 +103,18 @@
                   type="text"
                   class="form-control border-0"
                   id="delivery-courier"
+                  v-model="courierName"
                   readonly
                 />
             </div>
 
             <div class="form-group">
-              <label for="delivery-service">Delivery Service</label>
+              <label for="delivery-service">Courier Service</label>
               <input
                   type="text"
                   class="form-control border-0"
                   id="delivery-service"
+                  v-model="courierService"
                   readonly
                 />
             </div>
@@ -120,12 +126,9 @@
                   type="text"
                   class="form-control form-control-sm border-0"
                   id="delivery-fee"
-                  
+                  v-model="courierFee"
                   readonly
                 />
-                
-                
-
               </div>
             </div>
 
@@ -146,6 +149,7 @@
 import Navbar from "@/components/Navbar.vue";
 import Subnav from "@/components/Subnav.vue";
 import OrderDesc from "@/components/OrderDesc.vue";
+import axios from "axios";
 
 export default {
   name: "info-pesanan",
@@ -153,6 +157,145 @@ export default {
     Navbar,
     Subnav,
     OrderDesc
+  },
+  data() {
+    return {
+      token: "",
+      street: "",
+      cityId: null,
+      provinceId: null,
+      courierName: "",
+      courierService: "",
+      courierFee: null,
+      paymentMethodId: null,
+      dataProfile: [],
+      cart: [],
+      province: [],
+      cities: [],
+      payMethod: []
+    }
+  },
+  created() {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      this.token = token;
+    }
+    
+    this.street = sessionStorage.getItem("street");
+    this.cityId = sessionStorage.getItem("cityId");
+    this.provinceId = sessionStorage.getItem("provinceId");
+    this.courierName = sessionStorage.getItem("courierName");
+    this.courierService = sessionStorage.getItem("courierService");
+    this.courierFee = sessionStorage.getItem("courierFee");
+    this.paymentMethodId = sessionStorage.getItem("paymentMethodId");
+    this.getProfile();
+    this.getCart();
+    this.getProvince();
+    this.getCity();
+    this.getPaymentMethod();
+  },
+  methods: {
+    getProfile() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/customer/profile",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+      axios(options)
+        .then(response => {
+          this.dataProfile = response.data.data;
+          console.log('Profile : ', this.dataProfile);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getCart() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/core/cart",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+      axios(options)
+        .then(response => {
+          this.cart = response.data.data.carts;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getProvince() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/ongkir/province",
+        method: "get"
+      };
+      axios(options)
+        .then(response => {
+          let dataProvince = [];
+          let prov = response.data.data;
+          prov.map(data => {
+            if (this.provinceId == data.id) {
+              dataProvince.push(data)
+            }
+          })
+
+
+          this.province = dataProvince[0];
+          console.log("Provinsi : ", this.province);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getCity() {
+      const options = {
+        url: `https://rpl.abisatria.my.id/api/ongkir/city?provinceId=${this.provinceId}`,
+        method: "get"
+      };
+      axios(options)
+        .then(response => {
+          let dataCity = [];
+          let city = response.data.data;
+          city.map(data => {
+            if (this.cityId == data.id) {
+              dataCity.push(data)
+            }
+          });
+          this.cities = dataCity[0]
+          console.log('dataCity',this.cities)
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getPaymentMethod() {
+      const options = {
+        url: "https://rpl.abisatria.my.id/api/core/paymentMethod",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+      axios(options)
+        .then(response => {
+          let dataPay = [];
+          let pay = response.data.data;
+          pay.map(data => {
+            if (this.paymentMethodId == data.id) {
+              dataPay.push(data)
+            }
+          })
+          this.payMethod = dataPay[0];
+          console.log("Payment Method : ", dataPay);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
   }
 };
 </script>
