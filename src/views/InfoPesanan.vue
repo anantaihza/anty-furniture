@@ -167,7 +167,8 @@ export default {
       province: [],
       payMethod: [],
       dataProfile: [],
-      dataDelService: []
+      dataDelService: [],
+      dataIdCart: null
     };
   },
   created() {
@@ -179,6 +180,7 @@ export default {
     this.getProvince();
     this.getPaymentMethod();
     this.getCart();
+    
   },
   methods: {
     submitData: function() {
@@ -189,6 +191,7 @@ export default {
       let courierService = this.deliveryService.service
       let courierFee = this.deliveryService.cost[0].value
       let paymentMethodId = this.IdpaymentMethod
+      let order = this.dataIdCart
       sessionStorage.setItem("street", street);
       sessionStorage.setItem("cityId", cityId);
       sessionStorage.setItem("provinceId", provinceId);
@@ -196,6 +199,7 @@ export default {
       sessionStorage.setItem("courierService", courierService);
       sessionStorage.setItem("courierFee", courierFee);
       sessionStorage.setItem("paymentMethodId", paymentMethodId);
+      sessionStorage.setItem("order", order);
       
       this.$router.push({
           name: "ReviewPesanan",
@@ -314,6 +318,13 @@ export default {
       axios(options)
         .then(response => {
           this.cart = response.data.data.carts;
+          console.log('cart', this.cart)
+          let dataId = [];
+          for (let i = 0; i < response.data.data.carts.length; i++) {
+            dataId.push(response.data.data.carts[i].id)
+          }
+          this.dataIdCart = dataId
+          console.log('cek data id', this.dataIdCart)
         })
         .catch(e => {
           console.log(e);

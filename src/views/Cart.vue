@@ -201,6 +201,7 @@ export default {
       axios(options)
         .then(response => {
           this.cart = response.data.data.carts;
+          console.log(response.data.data)
         })
         .catch(e => {
           console.log(e);

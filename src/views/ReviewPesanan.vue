@@ -132,7 +132,7 @@
               </div>
             </div>
 
-            <router-link type="button" class="btn next-btn ml-auto" to="/reviewPesanan">Next</router-link>
+            <button class="btn next-btn ml-auto" @click.prevent="onConfirm">Next</button>
           </form>
         </div>
         <div class="vr"></div>
@@ -168,6 +168,7 @@ export default {
       courierService: "",
       courierFee: null,
       paymentMethodId: null,
+      order: null,
       dataProfile: [],
       cart: [],
       province: [],
@@ -188,6 +189,7 @@ export default {
     this.courierService = sessionStorage.getItem("courierService");
     this.courierFee = sessionStorage.getItem("courierFee");
     this.paymentMethodId = sessionStorage.getItem("paymentMethodId");
+    this.order = sessionStorage.getItem("order");
     this.getProfile();
     this.getCart();
     this.getProvince();
@@ -242,8 +244,6 @@ export default {
               dataProvince.push(data)
             }
           })
-
-
           this.province = dataProvince[0];
           console.log("Provinsi : ", this.province);
         })
@@ -296,6 +296,68 @@ export default {
           console.log(e);
         });
     },
+    onConfirm: function() {
+      if (this.token) {
+        let token = this.token;
+
+        let street = this.street;
+        let cityId = this.cityId;
+        let provinceId = this.provinceId;
+        let courierName = this.courierName;
+        let courierService = this.courierService;
+        let courierFee = this.courierFee;
+        let paymentMethodId = this.paymentMethodId;
+        let order = this.order.split(',').map(item => {
+          return {cartId : parseInt(item)}
+        })
+        let info = {
+          "order" : order,
+          "address" : {
+            "street" : street,
+            "cityId" : cityId,
+            "provinceId" : provinceId
+          },
+          "courier" : {
+            "courierName" : courierName,
+            "courierService" : courierService,
+            "courierFee" : courierFee
+          },
+          "paymentMethod" : {
+            "paymentMethodId" : paymentMethodId
+          }
+        }
+        console.log(info)
+        const options = {
+          url: "https://rpl.abisatria.my.id/api/core/confirmOrder",
+          method: "post",
+          data: info,
+          headers: {
+            authorization: token
+          }
+        };
+        axios(options)
+          .then(response => {
+            let orderId = response.data.data.order.id
+            console.log('onConfirm : ', response.data.data);
+            sessionStorage.removeItem("street");
+            sessionStorage.removeItem("cityId");
+            sessionStorage.removeItem("provinceId");
+            sessionStorage.removeItem("courierName");
+            sessionStorage.removeItem("courierService");
+            sessionStorage.removeItem("courierFee");
+            sessionStorage.removeItem("paymentMethodId");
+            this.$router.push({
+                name: "PaymentPesanan",
+                params: {
+                  orderId: orderId
+                }
+              });
+          })
+          .catch(e => {
+            console.log(e.response);
+          });
+      }
+    }
   }
 };
 </script>

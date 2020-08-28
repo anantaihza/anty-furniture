@@ -53,7 +53,7 @@ const routes = [
     component: ReviewPesanan
   },
   {
-    path: "/paymentPesanan",
+    path: "/paymentPesanan/:orderId",
     name: "PaymentPesanan",
     component: PaymentPesanan
   },
