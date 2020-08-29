@@ -45,7 +45,12 @@
                         <div class="form-group row">
                           <label for="form-name" class="col-sm-3 col-form-label">Name</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control border-0" id="form-name" v-model="dataProfile.name"/>
+                            <input
+                              type="text"
+                              class="form-control border-0"
+                              id="form-name"
+                              v-model="dataProfile.name"
+                            />
                           </div>
                         </div>
 
@@ -330,18 +335,47 @@
 
       <hr />
       <div class="mt-4 pt-3">
-        <h2>History</h2>
+        <h2>Ongoing</h2>
         <div class="row text-center py-3">
-          <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="item in ongoingOrder" :key="item.id">
             <button type="button" class="btn prod">
               <div class="card">
                 <div class="card-body">
-                  <img src="@/assets/showroom/charmen-sofa.png" class="card-img-top" alt />
-                  <h4 class="pt-3">rfbv</h4>
-                  <price :value="40000" />
+                  <img
+                    v-bind="{ src : item.product.productphotos[0].urlPhoto, alt : item.product.productName }"
+                    class="card-img-top"
+                  />
+                  <h4 class="pt-3">{{ item.product.productName }}</h4>
+                  <price :value="item.product.productPrice" />
                 </div>
               </div>
             </button>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="mt-4 pt-3">
+        <div v-if="!historyOrder.length == 0">
+          <h2>History</h2>
+          <div class="row text-center py-3">
+            <div
+              class="col-lg-3 col-md-4 col-sm-6 col-6"
+              v-for="item in historyOrder"
+              :key="item.id"
+            >
+              <button type="button" class="btn prod">
+                <div class="card">
+                  <div class="card-body">
+                    <img
+                      v-bind="{ src : item.product.productphotos[0].urlPhoto, alt : item.product.productName }"
+                      class="card-img-top"
+                    />
+                    <h4 class="pt-3">{{ item.product.productName }}</h4>
+                    <price :value="item.product.productPrice" />
+                  </div>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -363,7 +397,9 @@ export default {
   data() {
     return {
       token: "",
-      dataProfile: []
+      dataProfile: [],
+      ongoingOrder: [],
+      historyOrder: []
     };
   },
   created() {
@@ -372,6 +408,8 @@ export default {
       this.token = token;
     }
     this.getProfile();
+    this.getOngoingOrder();
+    this.getHistoryOrder();
   },
   methods: {
     logout: function() {
@@ -382,7 +420,7 @@ export default {
     },
     updateProfile: function() {
       let name = this.dataProfile.name;
-      let phone = this.dataProfile.phone
+      let phone = this.dataProfile.phone;
       const options = {
         url: `https://rpl.abisatria.my.id/api/customer/profile`,
         method: "patch",
@@ -397,7 +435,7 @@ export default {
       axios(options)
         .then(response => {
           this.getProfile();
-          console.log('Update Profile', response.data);
+          console.log("Update Profile", response.data);
         })
         .catch(e => {
           console.log(e);
@@ -418,7 +456,7 @@ export default {
       axios(options)
         .then(response => {
           this.getProfile();
-          console.log('Update Email : ', response.data);
+          console.log("Update Email : ", response.data);
         })
         .catch(e => {
           console.log(e.response);
@@ -435,7 +473,59 @@ export default {
       axios(options)
         .then(response => {
           this.dataProfile = response.data.data;
-          console.log('Data Profile : ', this.dataProfile);
+          console.log("Data Profile : ", this.dataProfile);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getOngoingOrder() {
+      const options = {
+        url:
+          "https://rpl.abisatria.my.id/api/customer/information/order?condition=ongoing",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+      axios(options)
+        .then(response => {
+          console.log("Ongoing Order : ", response.data.data);
+          let prodOngoing = [];
+          let dataOngoing = response.data.data;
+          dataOngoing.map(data => {
+            data.carts.map(prod => {
+              prodOngoing.push(prod);
+            });
+          });
+          this.ongoingOrder = prodOngoing;
+          console.log("Product Ongoing : ", this.ongoingOrder);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getHistoryOrder() {
+      const options = {
+        url:
+          "https://rpl.abisatria.my.id/api/customer/information/order?condition=history",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+      axios(options)
+        .then(response => {
+          console.log("History Order : ", response.data.data);
+          let prodHistory = [];
+          let dataHistory = response.data.data;
+          dataHistory.map(data => {
+            data.carts.map(prod => {
+              prodHistory.push(prod);
+            });
+          });
+          this.historyOrder = prodHistory;
+          console.log("Product History : ", this.historyOrder);
         })
         .catch(e => {
           console.log(e);
