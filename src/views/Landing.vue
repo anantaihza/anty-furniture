@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="container" id="new-items">
-        <div v-if="!newItem.length == 0">
+        <!-- <div v-if="!newItem.length == 0"> -->
           <h2 class="my-4">New Item</h2>
           <div class="row text-center py-3">
             <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="item in newItem" :key="item.id">
@@ -32,8 +32,8 @@
               </router-link>
             </div>
           </div>
-        </div>
-        <div v-else>
+        <!-- </div> -->
+        <!-- <div v-else> -->
           <h2 class="my-4">Recommendation</h2>
           <div class="row text-center py-3">
             <div
@@ -52,7 +52,7 @@
               </router-link>
             </div>
           </div>
-        </div>
+        <!-- </div> -->
       </div>
       <footers></footers>
     </div>
