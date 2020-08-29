@@ -13,6 +13,7 @@ import InfoPesanan from "../views/InfoPesanan.vue";
 import ReviewPesanan from "../views/ReviewPesanan.vue";
 import PaymentPesanan from "../views/PaymentPesanan.vue";
 import ConfirmForgetPass from "../views/ConfirmForgetPass.vue";
+import OrderDetail from "../views/OrderDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -81,6 +82,11 @@ const routes = [
     path: "/search/:key",
     name: "Search",
     component: Search
+  },
+  {
+    path: "/orderdetail/:orderId",
+    name: "OrderDetail",
+    component: OrderDetail
   }
 ];
 
