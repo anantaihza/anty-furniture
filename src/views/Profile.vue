@@ -441,9 +441,16 @@ export default {
             }
             i++;
           }
-          if (resOngoing[idTmp].order_statuses[0].statusType == 1) {
+          if (resOngoing[idTmp].order_statuses[0].statusType == 0) {
             this.$router.push({
               name: "PaymentPesanan",
+              params: {
+                orderId: id
+              }
+            });
+          } else {
+            this.$router.push({
+              name: "OrderDetail",
               params: {
                 orderId: id
               }

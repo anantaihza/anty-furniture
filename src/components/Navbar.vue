@@ -21,6 +21,11 @@
           <font-awesome-icon :icon="['fas', 'arrow-left']" />
         </router-link>
       </div>
+      <div v-else-if="navDetailOrder">
+        <router-link type="button" to="/profile" class="btn btnIcon">
+          <font-awesome-icon :icon="['fas', 'arrow-left']" />
+        </router-link>
+      </div>
       <div v-else>
         <a class="navbar-brand text-white font-weight-bold" href="#">Anty Furniture</a>
       </div>
@@ -107,6 +112,10 @@ export default {
       type: Boolean
     },
     navPayment: {
+      default: false,
+      type: Boolean
+    },
+    navDetailOrder: {
       default: false,
       type: Boolean
     }

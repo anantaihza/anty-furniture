@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar :navInfoPesanan="true" />
+    <navbar :navDetailOrder="true" />
     <subnav />
     <div class="container order-info">
       <div class="row">
