@@ -26,7 +26,7 @@
           <price :value="infoPayment.orderPriceTotal" />
         </h5>
 
-          <input type="file" id="file" ref="file" @:change="handleFileUpload()"/>
+          <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
           <br>
           <br>
           <button type="button" @click="onUpload" class="btn">PAY</button>
@@ -77,6 +77,7 @@ export default {
       //   this.selectedFile
       // );
       formData.append('paymentPhoto',this.file);
+      console.log(this.file)
       const options = {
         url: `https://rpl.abisatria.my.id/api/customer/upload/payment/${this.$route.params.orderId}`,
         method: "post",

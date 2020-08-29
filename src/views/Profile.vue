@@ -335,7 +335,8 @@
 
       <hr />
       <div class="mt-4 pt-3">
-        <h2>Ongoing</h2>
+        <div v-if="!ongoingOrder.length == 0">
+          <h2>Ongoing</h2>
         <div class="row text-center py-3">
           <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="item in ongoingOrder" :key="item.id">
             <button @click="onOngoing(item.orderId)" type="button" class="btn prod">
@@ -352,8 +353,11 @@
             </button>
           </div>
         </div>
+        <hr />
+        </div>
+        
       </div>
-      <hr />
+      
       <div class="mt-4 pt-3">
         <div v-if="!historyOrder.length == 0">
           <h2>History</h2>
@@ -363,7 +367,7 @@
               v-for="item in historyOrder"
               :key="item.id"
             >
-              <button @click="onOngoing(item.orderId)" type="button" class="btn prod">
+              <button @click="onHistory(item.orderId)" type="button" class="btn prod">
                 <div class="card">
                   <div class="card-body">
                     <img
@@ -461,9 +465,54 @@ export default {
           console.log(e);
         });
     },
+    onHistory: function(id) {
+      const options = {
+        url:
+          "https://rpl.abisatria.my.id/api/customer/information/order?condition=history",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+      axios(options)
+        .then(response => {
+          let resOngoing = response.data.data;
+          console.log("Ongoing cek : ", response.data.data);
+          let i = 0;
+          let check = false;
+          let idTmp;
+          while (i < resOngoing.length && check == false) {
+            if (resOngoing[i].id == id) {
+              check = true;
+              idTmp = i;
+            }
+            i++;
+          }
+          if (resOngoing[idTmp].order_statuses[0].statusType == 1) {
+            this.$router.push({
+              name: "PaymentPesanan",
+              params: {
+                orderId: id
+              }
+            });
+          } else {
+            this.$router.push({
+              name: "OrderDetail",
+              params: {
+                orderId: id
+              }
+            });
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     updateProfile: function() {
+      console.log('Updating Profile')
       let name = this.dataProfile.name;
       let phone = this.dataProfile.phone;
+      // console.log(name,phone)
       const options = {
         url: `https://rpl.abisatria.my.id/api/customer/profile`,
         method: "patch",
@@ -477,8 +526,9 @@ export default {
       };
       axios(options)
         .then(response => {
-          this.getProfile();
           console.log("Update Profile", response.data);
+          alert("Berhasil di update")
+          // this.getProfile();
         })
         .catch(e => {
           console.log(e);

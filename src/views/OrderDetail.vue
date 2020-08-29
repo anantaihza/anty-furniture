@@ -10,10 +10,27 @@
             <h4 >Transaction Code :</h4>
             <p>{{ infoPayment.orderCode }}</p>
           </div>
+          
+            <div class="col-sm-9 mb-4">
+              <h4>Transaction Status :</h4>
+              <div v-if="infoPayment.transaction.transactionStatus == 'true'">
+                <p>Already paid</p>
+              </div>
+              <div v-else>
+                <p>Not yet pay</p>
+              </div>
+            </div>
+
+          
+          
+
           <div class="col-sm-9 mb-4">
             <h4>Payment Account Name :</h4>
             <p>{{ infoPayment.transaction.payment_method.paymentAccountName }}</p>
           </div>
+
+          
+
           <div class="col-sm-9 mb-4">
             <h4>Account Number :</h4>
             <p>{{ infoPayment.transaction.payment_method.paymentAccountNumber }}</p>
@@ -23,10 +40,15 @@
             <p>{{ infoPayment.transaction.payment_method.paymentBank }}</p>
           </div>
           <hr>
-          <h2>{{ infoPayment.order_statuses[0].statusName }}</h2>
-          <p>{{ infoPayment.order_statuses[0].createdAt }}</p>
-          <br>
-            <h5>{{ infoPayment.order_statuses[0].statusDesc }}</h5>
+          <div v-for="pay in infoPayment.order_statuses" :key="pay.id">
+            <p>{{ pay.createdAt }}</p>
+            <h2>{{ pay.statusName }} </h2>
+            <h5>{{ pay.statusDesc }}</h5>
+            <br>
+            
+            <hr>
+          </div>
+          
             
         </div>
         <div class="vr"></div>
