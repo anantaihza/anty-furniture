@@ -5,15 +5,11 @@
     <div class="container order-info">
       <div class="row">
         <div class="col-md-6">
-          <h2>Transaction Status</h2>
+          <h2 class="trans">Transaction Status</h2>
           <div class="col-sm-9 mb-4">
-            <h4>Transaction Code :</h4>
+            <h4 >Transaction Code :</h4>
             <p>{{ infoPayment.orderCode }}</p>
           </div>
-          <!-- <div class="col-sm-9 mb-4">
-            <h4>Transaction Status :</h4>
-            <p>{{ infoPayment.transaction.transactionStatus }}</p>
-          </div> -->
           <div class="col-sm-9 mb-4">
             <h4>Payment Account Name :</h4>
             <p>{{ infoPayment.transaction.payment_method.paymentAccountName }}</p>
@@ -26,12 +22,17 @@
             <h4>Payment Bank : </h4>
             <p>{{ infoPayment.transaction.payment_method.paymentBank }}</p>
           </div>
-          <button type="button" class="btn next-btn ml-auto mt-4">Next</button>
+          <hr>
+          <h2>{{ infoPayment.order_statuses[0].statusName }}</h2>
+          <p>{{ infoPayment.order_statuses[0].createdAt }}</p>
+          <br>
+            <h5>{{ infoPayment.order_statuses[0].statusDesc }}</h5>
+            
         </div>
         <div class="vr"></div>
         <div class="col-md-5">
           <div class="container">
-            <h2>Order Status</h2>
+            <h2>Product Detail</h2>
 
             <h4>
               Total :
@@ -123,7 +124,7 @@ export default {
   margin: 20px 15px;
   border-left: 0.2px solid #424242;
 }
-h2 {
+.trans {
   margin-bottom: 9%;
 }
 .customer-info {

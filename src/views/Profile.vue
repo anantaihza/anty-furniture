@@ -363,7 +363,7 @@
               v-for="item in historyOrder"
               :key="item.id"
             >
-              <button type="button" class="btn prod">
+              <button @click="onOngoing(item.orderId)" type="button" class="btn prod">
                 <div class="card">
                   <div class="card-body">
                     <img
@@ -441,7 +441,7 @@ export default {
             }
             i++;
           }
-          if (resOngoing[idTmp].order_statuses[0].statusType == 0) {
+          if (resOngoing[idTmp].order_statuses[0].statusType == 1) {
             this.$router.push({
               name: "PaymentPesanan",
               params: {
