@@ -338,7 +338,7 @@
         <h2>Ongoing</h2>
         <div class="row text-center py-3">
           <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="item in ongoingOrder" :key="item.id">
-            <button type="button" class="btn prod">
+            <button @click="onOngoing(item.orderId)" type="button" class="btn prod">
               <div class="card">
                 <div class="card-body">
                   <img
@@ -417,6 +417,42 @@ export default {
       this.$router.push({
         name: "Landing"
       });
+    },
+    onOngoing: function(id) {
+      const options = {
+        url:
+          "https://rpl.abisatria.my.id/api/customer/information/order?condition=ongoing",
+        method: "get",
+        headers: {
+          authorization: this.token
+        }
+      };
+      axios(options)
+        .then(response => {
+          let resOngoing = response.data.data;
+          console.log("Ongoing cek : ", response.data.data);
+          let i = 0;
+          let check = false;
+          let idTmp;
+          while (i < resOngoing.length && check == false) {
+            if (resOngoing[i].id == id) {
+              check = true;
+              idTmp = i;
+            }
+            i++;
+          }
+          if (resOngoing[idTmp].order_statuses[0].statusType == 1) {
+            this.$router.push({
+              name: "PaymentPesanan",
+              params: {
+                orderId: id
+              }
+            });
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
     updateProfile: function() {
       let name = this.dataProfile.name;
