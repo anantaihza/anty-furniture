@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar :navPayment="true" />
+    <navbar :navDetailOrder="true" />
     <subnav />
     <div class="container mt-4 py-4">
       <h2>PAYMENT INFORMATION</h2>
@@ -12,16 +12,24 @@
           </div>
         </div>
         <div class="container mt-4">
-          <h5 class="paid">Account Name : {{ infoPayment.transaction.payment_method.paymentAccountName }}</h5>
+          <h5
+            class="paid"
+          >Account Name : {{ infoPayment.transaction.payment_method.paymentAccountName }}</h5>
           <div class="container">
-
-          <hr>
+            <hr />
           </div>
 
           <h3>{{ infoPayment.transaction.payment_method.paymentBank }}</h3>
         </div>
-        <h5 class="paid mt-3">The amount to be paid :  <price :value="infoPayment.orderPriceTotal" /></h5>
-        <button type="button" class="btn">PAY</button>
+        <h5 class="paid mt-3">
+          The amount to be paid :
+          <price :value="infoPayment.orderPriceTotal" />
+        </h5>
+
+          <input type="file" id="file" ref="file" @:change="handleFileUpload()"/>
+          <br>
+          <br>
+          <button type="button" @click="onUpload" class="btn">PAY</button>
       </div>
     </div>
   </div>
@@ -44,8 +52,10 @@ export default {
     return {
       token: "",
       orderId: this.$route.params.orderId,
-      infoPayment: []
-    }
+      infoPayment: [],
+      // selectedFile: null
+      file: ''
+    };
   },
   created() {
     const token = localStorage.getItem("access_token");
@@ -55,6 +65,41 @@ export default {
     this.getInfoPayment();
   },
   methods: {
+    // onFileSelected(event) {
+    //   this.selectedFile = event.target.files[0];
+    // },
+    handleFileUpload(){
+      this.file = this.$refs.file.files[0];
+    },
+    onUpload() {
+      let formData = new FormData();
+      // paymentPhoto.append(
+      //   this.selectedFile
+      // );
+      formData.append('paymentPhoto',this.file);
+      const options = {
+        url: `https://rpl.abisatria.my.id/api/customer/upload/payment/${this.$route.params.orderId}`,
+        method: "post",
+        data: formData,
+        headers: {
+          authorization: this.token,
+
+        }
+      };
+      axios(options)
+        .then(response => {
+          console.log(response);
+          this.$router.push({
+            name: "Landing",
+            params: {
+              token: this.token
+            }
+          });
+        })
+        .catch(e => {
+          console.log(e.response);
+        });
+    },
     getInfoPayment() {
       const options = {
         url: `https://rpl.abisatria.my.id/api/customer/information/payment/${this.$route.params.orderId}`,
@@ -66,16 +111,25 @@ export default {
       axios(options)
         .then(response => {
           this.infoPayment = response.data.data;
-          console.log('Informasi Payment : ', this.infoPayment);
-          console.log('get account', this.infoPayment.transaction.payment_method.paymentAccountName);
-          console.log('get account', this.infoPayment.transaction.payment_method.paymentAccountNumber);
-          console.log('get account', this.infoPayment.transaction.payment_method.paymentBank);
+          console.log("Informasi Payment : ", this.infoPayment);
+          console.log(
+            "get account",
+            this.infoPayment.transaction.payment_method.paymentAccountName
+          );
+          console.log(
+            "get account",
+            this.infoPayment.transaction.payment_method.paymentAccountNumber
+          );
+          console.log(
+            "get account",
+            this.infoPayment.transaction.payment_method.paymentBank
+          );
         })
         .catch(e => {
           console.log(e);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
