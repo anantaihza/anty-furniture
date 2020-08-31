@@ -66,13 +66,13 @@ export default {
   box-shadow: 0 1px 10px 0 grey;
 }
 .subnav .btn {
-  padding: 2px 8px;
+  background-color: #ffffff;
   text-align: center;
   font-size: 15px;
   font-weight: 500;
   margin-right: 20px;
+  padding: 2px 8px;
   border-radius: 20px;
-  background-color: #ffffff;
   box-shadow: 1px 1px 5px rgb(204, 204, 204);
 }
 .information {

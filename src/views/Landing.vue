@@ -17,42 +17,38 @@
         </div>
       </div>
       <div class="container" id="new-items">
-        <!-- <div v-if="!newItem.length == 0"> -->
-          <h2 class="my-4">New Item</h2>
-          <div class="row text-center py-3">
-            <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="item in newItem" :key="item.id">
-              <router-link :to="{ name: 'Product', params: { id: item.id } }" class="btn prod">
-                <div class="card">
-                  <div class="card-body">
-                    <img v-bind="{ src : item.productphotos[0].urlPhoto, alt : item.productName }" />
-                    <h4 class="pt-3">{{ item.productName }}</h4>
-                    <price :value="item.productPrice" />
-                  </div>
+        <h2 class="my-4">New Item</h2>
+        <div class="row text-center py-3">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="item in newItem" :key="item.id">
+            <router-link :to="{ name: 'Product', params: { id: item.id } }" class="btn prod">
+              <div class="card">
+                <div class="card-body">
+                  <img v-bind="{ src : item.productphotos[0].urlPhoto, alt : item.productName }" />
+                  <h4 class="pt-3">{{ item.productName }}</h4>
+                  <price :value="item.productPrice" />
                 </div>
-              </router-link>
-            </div>
+              </div>
+            </router-link>
           </div>
-        <!-- </div> -->
-        <!-- <div v-else> -->
-          <h2 class="my-4">Recommendation</h2>
-          <div class="row text-center py-3">
-            <div
-              class="col-lg-3 col-md-4 col-sm-6 col-6"
-              v-for="item in recommendation"
-              :key="item.id"
-            >
-              <router-link :to="{ name: 'Product', params: { id: item.id } }" class="btn prod">
-                <div class="card">
-                  <div class="card-body">
-                    <img v-bind="{ src : item.productphotos[0].urlPhoto, alt : item.productName }" />
-                    <h4 class="pt-3">{{ item.productName }}</h4>
-                    <price :value="item.productPrice" />
-                  </div>
+        </div>
+        <h2 class="my-4">Recommendation</h2>
+        <div class="row text-center py-3">
+          <div
+            class="col-lg-3 col-md-4 col-sm-6 col-6"
+            v-for="item in recommendation"
+            :key="item.id"
+          >
+            <router-link :to="{ name: 'Product', params: { id: item.id } }" class="btn prod">
+              <div class="card">
+                <div class="card-body">
+                  <img v-bind="{ src : item.productphotos[0].urlPhoto, alt : item.productName }" />
+                  <h4 class="pt-3">{{ item.productName }}</h4>
+                  <price :value="item.productPrice" />
                 </div>
-              </router-link>
-            </div>
+              </div>
+            </router-link>
           </div>
-        <!-- </div> -->
+        </div>
       </div>
       <footers></footers>
     </div>

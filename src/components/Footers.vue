@@ -32,14 +32,14 @@ export default {
 
 <style scoped>
 .foot {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  text-align: center;
   color: #ffffff;
   background-color: #fd961e;
-  border-radius: 10px;
-  font-weight: 500;
   font-size: 18px;
+  font-weight: 500;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 .foot img {
   margin-left: 10px;
@@ -47,7 +47,6 @@ export default {
 .foot .desk a {
   color: black;
   font-size: 15px;
-
   margin: 10px 10px 10px 10px;
 }
 .foot .desk a:hover {

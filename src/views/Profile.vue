@@ -528,7 +528,6 @@ export default {
         .then(response => {
           console.log("Update Profile", response.data);
           alert("Berhasil di update")
-          // this.getProfile();
         })
         .catch(e => {
           console.log(e);
@@ -618,7 +617,6 @@ export default {
             });
           });
           this.historyOrder = prodHistory;
-          console.log("Product History : ", this.historyOrder);
         })
         .catch(e => {
           console.log(e);

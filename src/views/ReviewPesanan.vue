@@ -162,18 +162,18 @@ export default {
     return {
       token: "",
       street: "",
-      cityId: null,
-      provinceId: null,
       courierName: "",
       courierService: "",
-      courierFee: null,
-      paymentMethodId: null,
       order: null,
-      dataProfile: [],
+      cityId: null,
+      courierFee: null,
+      provinceId: null,
+      paymentMethodId: null,
       cart: [],
-      province: [],
       cities: [],
-      payMethod: []
+      province: [],
+      payMethod: [],
+      dataProfile: [],
     }
   },
   created() {

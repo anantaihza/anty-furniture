@@ -78,7 +78,6 @@ export default {
         axios(options)
           .then(response => {
             const token = response.data.data.token;
-            console.log(response.data.data.token);
             localStorage.setItem('access_token', token);
             if (token) {
               this.$router.push({

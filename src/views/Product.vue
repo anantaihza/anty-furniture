@@ -140,10 +140,10 @@ export default {
     return {
       qty: 1,
       token: "",
-      idProduct: this.$route.params.id,
       simProd: [],
       prodDetail: [],
-      recommendation: []
+      recommendation: [],
+      idProduct: this.$route.params.id
     };
   },
   created() {

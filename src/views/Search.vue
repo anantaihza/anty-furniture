@@ -142,7 +142,6 @@ export default {
       };
       axios(options).then(response => {
         this.dataSearch = response.data.data;
-
         console.log(response.data.data);
       });
     }

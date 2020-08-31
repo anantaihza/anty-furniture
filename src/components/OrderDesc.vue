@@ -53,7 +53,6 @@ export default {
     const token = localStorage.getItem("access_token");
     if (token) {
       this.token = token;
-      console.log("mengakses dengan token");
     }
     this.getCart();
   },
@@ -79,7 +78,6 @@ export default {
       axios(options)
         .then(response => {
           this.cart = response.data.data.carts;
-          console.log(this.cart);
         })
         .catch(e => {
           console.log(e);

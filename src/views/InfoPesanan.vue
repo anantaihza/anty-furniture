@@ -156,19 +156,19 @@ export default {
     return {
       idCity: null,
       idProvince: null,
+      dataIdCart: null,
       IdpaymentMethod: null,
       checkProvince: false,
       token: "",
       street: "",
       deliveryCourier: "",
-      deliveryService: [],
       cart: [],
       cities: [],
       province: [],
       payMethod: [],
       dataProfile: [],
       dataDelService: [],
-      dataIdCart: null
+      deliveryService: []
     };
   },
   created() {
@@ -217,7 +217,6 @@ export default {
       axios(options)
         .then(response => {
           this.dataProfile = response.data.data;
-          console.log('Profile : ', this.dataProfile);
         })
         .catch(e => {
           console.log(e);
@@ -231,7 +230,6 @@ export default {
       axios(options)
         .then(response => {
           this.province = response.data.data;
-          console.log("Provinsi : ", this.province);
         })
         .catch(e => {
           console.log(e);
@@ -246,7 +244,6 @@ export default {
         .then(response => {
           this.cities = response.data.data;
           this.checkProvince = true;
-          console.log("City : ", this.cities);
         })
         .catch(e => {
           console.log(e);
@@ -263,7 +260,6 @@ export default {
       axios(options)
         .then(response => {
           this.payMethod = response.data.data;
-          console.log("Payment Method : ", this.payMethod);
         })
         .catch(e => {
           console.log(e);
@@ -299,8 +295,6 @@ export default {
         axios(options)
           .then(response => {
             this.dataDelService = response.data.data.costs;
-            console.log("Delivery Service : ", this.dataDelService);
-            console.log("Delivery Service Value : ", this.deliveryService.cost[0].value); 
           })
           .catch(e => {
             console.log(e.response);
@@ -318,13 +312,11 @@ export default {
       axios(options)
         .then(response => {
           this.cart = response.data.data.carts;
-          console.log('cart', this.cart)
           let dataId = [];
           for (let i = 0; i < response.data.data.carts.length; i++) {
             dataId.push(response.data.data.carts[i].id)
           }
           this.dataIdCart = dataId
-          console.log('cek data id', this.dataIdCart)
         })
         .catch(e => {
           console.log(e);

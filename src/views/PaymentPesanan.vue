@@ -26,10 +26,10 @@
           <price :value="infoPayment.orderPriceTotal" />
         </h5>
 
-          <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-          <br>
-          <br>
-          <button type="button" @click="onUpload" class="btn">PAY</button>
+        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()" />
+        <br />
+        <br />
+        <button type="button" @click="onUpload" class="btn">PAY</button>
       </div>
     </div>
   </div>
@@ -51,10 +51,9 @@ export default {
   data() {
     return {
       token: "",
-      orderId: this.$route.params.orderId,
+      file: "",
       infoPayment: [],
-      // selectedFile: null
-      file: ''
+      orderId: this.$route.params.orderId
     };
   },
   created() {
@@ -65,26 +64,19 @@ export default {
     this.getInfoPayment();
   },
   methods: {
-    // onFileSelected(event) {
-    //   this.selectedFile = event.target.files[0];
-    // },
-    handleFileUpload(){
+    handleFileUpload() {
       this.file = this.$refs.file.files[0];
     },
     onUpload() {
       let formData = new FormData();
-      // paymentPhoto.append(
-      //   this.selectedFile
-      // );
-      formData.append('paymentPhoto',this.file);
-      console.log(this.file)
+      formData.append("paymentPhoto", this.file);
+      console.log(this.file);
       const options = {
         url: `https://rpl.abisatria.my.id/api/customer/upload/payment/${this.$route.params.orderId}`,
         method: "post",
         data: formData,
         headers: {
-          authorization: this.token,
-
+          authorization: this.token
         }
       };
       axios(options)

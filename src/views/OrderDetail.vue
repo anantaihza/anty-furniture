@@ -7,49 +7,42 @@
         <div class="col-md-6">
           <h2 class="trans">Transaction Status</h2>
           <div class="col-sm-9 mb-4">
-            <h4 >Transaction Code :</h4>
+            <h4>Transaction Code :</h4>
             <p>{{ infoPayment.orderCode }}</p>
           </div>
-          
-            <div class="col-sm-9 mb-4">
-              <h4>Transaction Status :</h4>
-              <div v-if="infoPayment.transaction.transactionStatus == 'true'">
-                <p>Already paid</p>
-              </div>
-              <div v-else>
-                <p>Not yet pay</p>
-              </div>
-            </div>
 
-          
-          
+          <div class="col-sm-9 mb-4">
+            <h4>Transaction Status :</h4>
+            <div v-if="infoPayment.transaction.transactionStatus == 'true'">
+              <p>Already paid</p>
+            </div>
+            <div v-else>
+              <p>Not yet pay</p>
+            </div>
+          </div>
 
           <div class="col-sm-9 mb-4">
             <h4>Payment Account Name :</h4>
             <p>{{ infoPayment.transaction.payment_method.paymentAccountName }}</p>
           </div>
 
-          
-
           <div class="col-sm-9 mb-4">
             <h4>Account Number :</h4>
             <p>{{ infoPayment.transaction.payment_method.paymentAccountNumber }}</p>
           </div>
           <div class="col-sm-9 mb-4">
-            <h4>Payment Bank : </h4>
+            <h4>Payment Bank :</h4>
             <p>{{ infoPayment.transaction.payment_method.paymentBank }}</p>
           </div>
-          <hr>
+          <hr />
           <div v-for="pay in infoPayment.order_statuses" :key="pay.id">
             <p>{{ pay.createdAt }}</p>
-            <h2>{{ pay.statusName }} </h2>
+            <h2>{{ pay.statusName }}</h2>
             <h5>{{ pay.statusDesc }}</h5>
-            <br>
-            
-            <hr>
+            <br />
+
+            <hr />
           </div>
-          
-            
         </div>
         <div class="vr"></div>
         <div class="col-md-5">
@@ -63,8 +56,7 @@
             <table class="table table-hover table-borderless table-fixed">
               <thead>
                 <tr>
-                  <th colspan="2">
-                  </th>
+                  <th colspan="2"></th>
                 </tr>
               </thead>
               <tbody class="scrollbar">
@@ -128,7 +120,6 @@ export default {
       axios(options)
         .then(response => {
           this.infoPayment = response.data.data;
-          console.log("Order : ", this.infoPayment);
         })
         .catch(e => {
           console.log(e);

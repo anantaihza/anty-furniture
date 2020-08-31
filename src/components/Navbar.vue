@@ -167,9 +167,9 @@ export default {
   background-color: #70b2ee;
 }
 .navbar .btnIcon {
-  padding: 1px;
-  font-size: 20px;
   color: rgba(32, 32, 32, 0.54);
+  font-size: 20px;
+  padding: 1px;
 }
 .navbar .btnIcon:hover {
   color: rgba(61, 61, 61, 0.54);
